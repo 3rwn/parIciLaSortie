@@ -9,11 +9,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class OutingController extends AbstractController
 {
     /**
-     * @Route("/outing", name="app_outing")
+     * @Route("/home", name="home")
      */
     public function index(): Response
     {
-        return $this->render('outing/index.html.twig', [
+        return $this->render('outing/home.html.twig', [
             'controller_name' => 'OutingController',
         ]);
     }
