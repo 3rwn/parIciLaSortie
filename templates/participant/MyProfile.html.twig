@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block titre %}Mon Profil{% endblock %}
+
+{% block body %}
+
+    {{ form_start (formulaire)}}
+    {{ form_label(formulaire.name, 'Nom') }}
+
+    {{ form_widget (formulaire)}}
+    <button class="btn btn-primary" type="submit" name="update">Modifier</button>
+    {{ form_end (formulaire)}}
+    </div>
+{% endblock %}

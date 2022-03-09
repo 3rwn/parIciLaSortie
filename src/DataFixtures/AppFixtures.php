@@ -26,8 +26,8 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
-        //$this->addParticipants();
-        //$this->addLocations();
+        $this->addParticipants();
+        $this->addLocations();
         $this->addOutings();
 
     }
