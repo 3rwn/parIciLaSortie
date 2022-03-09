@@ -4,12 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\ParticipantUpdateType;
+use App\Security\AppParticipantAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class ParticipantController extends AbstractController
 {
@@ -26,20 +29,30 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/MyProfile",  name="my_profile")
      */
-    public function showMyProfile(EntityManagerInterface $em, Request $req): Response
+    public function showMyProfile(EntityManagerInterface $em, Request $req, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppParticipantAuthenticator $authenticator): Response
     {
         $participant = $this->getUser();
-
-
-        $form =  $this->createForm(ParticipantUpdateType::class, $participant);
+        $form = $this->createForm(ParticipantUpdateType::class, $participant);
         $form->setData($participant);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('password')->getData() == '') {
+                $em->persist($participant);
+                $em->flush();
+                return $this->redirectToRoute('home');
+            }
+            $participant->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $participant,
+                    $form->get('password')->getData()
+                )
+            );
             $em->persist($participant);
             $em->flush();
-            return $this->redirectToRoute('home');
+
+            return $userAuthenticator->authenticateUser($participant, $authenticator, $req);
+            $this->redirectToRoute('home');
         }
 
         return $this->render('participant/MyProfile.html.twig', [
