@@ -27,7 +27,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+        <a class="navbar-brand" href="#page-top">Sortir.com</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -38,9 +38,11 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_admin_villes')}}">Villes</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_admin_campus')}}">Campus</a></li>
                 {% endif %}
+                {% if is_granted('ROLE_USER') %}
                 <li class="nav-item"><a class="nav-link" href="{{ path('home')}}">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('my_profile')}}">Mon profil</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ path('app_logout')}}">Se déconnecter</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
