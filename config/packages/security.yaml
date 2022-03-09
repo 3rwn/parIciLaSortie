@@ -25,13 +25,13 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
-#            remember_me:
-#                secret:   '%kernel.secret%' # required
-#                lifetime: 604800 # 1 week in seconds
-#                # by default, the feature is enabled by checking a
-#                # checkbox in the login form (see below), uncomment the
-#                # following line to always enable it.
-#                #always_remember_me: true
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
 
 
             # activate different ways to authenticate
@@ -43,8 +43,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         #- { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/, roles: ROLE_USER }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/outing, roles: ROLE_USER }
+        # - { path: ^/participant, roles: ROLE_USER }
+
 
 when@test:
     security:
