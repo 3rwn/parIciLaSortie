@@ -68,6 +68,19 @@
   --bs-body-bg: #fff;
 }
 
+.col-4{
+  color: #dde0e3;
+}
+
+.my-custom-scrollbar {
+  position: relative;
+  height: 200px;
+  overflow: auto;
+  }
+  .table-wrapper-scroll-y {
+  display: block;
+  }
+
 *,
 *::before,
 *::after {
@@ -157,6 +170,7 @@ h6, .h6 {
 }
 
 p {
+  text-decoration: #d2cfda;
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -331,8 +345,11 @@ th {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
+  color: #dacfd0;
 }
-
+.td:hover{
+  color: #dfe0e1;
+}
 label {
   display: inline-block;
 }
@@ -354,6 +371,7 @@ textarea {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  color: #d2eef3;
 }
 
 button,
@@ -642,6 +660,10 @@ progress {
   padding-left: var(--bs-gutter-x, 0.75rem);
   margin-right: auto;
   margin-left: auto;
+}
+
+.container {
+  color: #bebebf;
 }
 
 @media (min-width: 576px) {
@@ -1971,7 +1993,7 @@ progress {
   --bs-table-hover-bg: rgba(0, 0, 0, 0.075);
   width: 100%;
   margin-bottom: 1rem;
-  color: #212529;
+  color: #ffffff;
   vertical-align: top;
   border-color: #dee2e6;
 }
@@ -1983,9 +2005,11 @@ progress {
 }
 .table > tbody {
   vertical-align: inherit;
+  color: #cbdbd4;
 }
 .table > thead {
   vertical-align: bottom;
+  color: #cbdbd4;
 }
 .table > :not(:first-child) {
   border-top: 2px solid currentColor;

@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Outing;
+use App\Entity\Participant;
+use App\Repository\ParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,10 +25,14 @@ class OutingController extends AbstractController
     /**
      * @Route("/showouting/{id}", name="outing_detail")
      */
-    public function detail(Outing $o): Response
+    public function detail(Outing $o, ParticipantRepository $repoP): Response
     {
+        $participants = $repoP->findAll();
+
+
         return $this->render('outing/showouting.html.twig', [
             'outing' => $o,
+            'participants' => $participants,
         ]);
     }
 

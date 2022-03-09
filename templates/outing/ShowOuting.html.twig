@@ -5,25 +5,21 @@
 {%  endblock %}
 
 {% block body %}
-
-
+<br>
+<br>
 
 <h1> {{ outing.name}} </h1>
 
-<div class="container px-4 px-lg-5">
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nom de la sortie :</th>
-            <th>Date et heure de la sortie :</th>
-            <th>Date limite d'inscription :</th>
-            <th>Nombre de places :</th>
-            <th>Durée : </th>
-            <th>Description et infos :</th>  
-        </tr>
-    </thead>
- {{ outing.name}}
-<p>
+<br>
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+    <p>
+    Nom de la sortie {{ outing.name}}
+    </p>
+    <p>
 Date et heure de la sortie : {{ outing.dateTimeStartOuting  | date('d/m/Y h:m:s')}}
 </p>
 <p>
@@ -37,10 +33,9 @@ Durée : {{ outing.duration}} minutes
 <p>
 Description et infos : {{ outing.description}}
 </p>
-</div>
-
-<div class="container px-4 px-lg-5">
-<p>
+    </div>
+    <div class="col">
+     <p>
 Campus : {{ outing.campus.name}}
 </p>
 <p>
@@ -61,6 +56,34 @@ Latitude  : {{ outing.location.latitude}}
 <p>
 Longitude : {{ outing.location.longitude}}
 </p>
+</div> 
+</div>
+</div>
+
+<br>
+<br>
+
+
+<div class="col-4">
+<div class="table-wrapper-scroll-y my-custom-scrollbar">
+    Liste de participants inscrits
+<table class="table table-striped">
+    <thead class="thead-dark">
+   <tbody>
+   <tr>
+            <th>Pseudo</th>
+            <th>Nom</th>
+   </tr>
+  {% for p in outing.participants %}
+   <tr>
+        <td>{{ p.pseudo }}</td> 
+        <td>{{ p.name }}</td>
+   </tr>
+{% endfor %}
+</tbody>
+</thead>
+</table>
+</div>
 </div>
 
 
