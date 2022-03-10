@@ -84,6 +84,9 @@ class ParticipantController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('home');
             }
+            if($password && $profilePictureFile) {
+
+            }
             }
 
         return $this->render('participant/MyProfile.html.twig', [

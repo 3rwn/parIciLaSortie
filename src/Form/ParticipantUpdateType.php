@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,10 +30,13 @@ class ParticipantUpdateType extends AbstractType
             ->add('name', null, ['label' => 'Nom'])
             ->add('phoneNumber', null, ['label' => 'Téléphone', 'attr' => ['placeholder' => 'Saisissez votre télépone']])
             ->add('email', null, ['label' => 'Mail'])
-            ->add('password', null, ['mapped' => false, 'label' => 'Mot de passe', 'required' => false])
-            ->add('confirmPassword', null, ['mapped' => false, 'label' => 'Confirmation',
-                'attr' => ['placeholder' => 'Confirmez votre mdp']
-
+            ->add('password', RepeatedType::class, ['mapped' => false,
+                'type' => PasswordType::class,
+                'invalid_message' => 'Le mot de passe et la confirmation ne correspondent pas.',
+                'options' => ['attr' => ['placeholder' => 'Entrez votre nouveau mot de passe','class' => 'password-field']],
+                'required' => true,
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation'],
             ])
             ->add('campus', null, ['choice_label' => 'name'])
             ->add('profilePictureFileName', FileType::class, [
