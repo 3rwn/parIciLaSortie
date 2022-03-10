@@ -13,6 +13,7 @@
         {{ form_widget (formulaire)}}
         <button class="btn btn-primary" type="submit" name="update">Modifier</button>
         {{ form_end (formulaire)}}
+            <img src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}">
         </div>
     </div>
 {% endblock %}

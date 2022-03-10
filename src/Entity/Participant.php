@@ -116,6 +116,11 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $organizer;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ProfilePictureFileName;
+
     public function __construct()
     {
         $this->outings = new ArrayCollection();
@@ -334,6 +339,18 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
                 $organizer->setOrganizer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfilePictureFileName(): ?string
+    {
+        return $this->ProfilePictureFileName;
+    }
+
+    public function setProfilePictureFileName(string $ProfilePictureFileName): self
+    {
+        $this->ProfilePictureFileName = $ProfilePictureFileName;
 
         return $this;
     }
