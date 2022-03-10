@@ -67,6 +67,13 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
     {
     }
 
+    /**
+     * @param string $pseudoOrEmail
+     * @return Participant|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * function en charge de permettre la connexion avec le pseudo ou l'email
+     * utilisation du query builder
+     */
     public function loadUserByIdentifier(string $pseudoOrEmail): ?Participant
     {
         $entityManager = $this->getEntityManager();

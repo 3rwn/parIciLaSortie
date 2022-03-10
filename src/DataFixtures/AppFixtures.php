@@ -22,7 +22,12 @@ class AppFixtures extends Fixture
     private UserPasswordHasherInterface $hasher;
     private Generator $faker;
 
-
+    /**
+     * @param ObjectManager $manager
+     * @return void
+     * function en charge de remplir la base de données à l'aide de fixture et faker
+     * function appelée en CLI
+     */
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
@@ -32,12 +37,20 @@ class AppFixtures extends Fixture
 
     }
 
+    /**
+     * @param UserPasswordHasherInterface $passwordHasher
+     * function en charge de paramétrer la langue des données générées et de hasher le password
+     */
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         $this->faker = Factory::create('fr_FR');
         $this->hasher = $passwordHasher;
     }
 
+    /**
+     * @return void
+     * function en charge de générer des participants dans la base de données
+     */
     public function addParticipants()
     {
         $campusTab = $this->manager->getRepository(Campus::class)->findAll();
@@ -61,6 +74,10 @@ class AppFixtures extends Fixture
         //$users = $this->manager->getRepository(User::class)->findAll();
     }
 
+    /**
+     * @return void
+     * function en charge de générer des lieux dans la base de données
+     */
     public function addLocations()
     {
         $cityTab = $this->manager->getRepository(City::class)->findAll();
@@ -80,6 +97,10 @@ class AppFixtures extends Fixture
         //$users = $this->manager->getRepository(User::class)->findAll();
     }
 
+    /**
+     * @return void
+     * function en charge de générer des sorties dans la base de données
+     */
     public function addOutings()
     {
         $locationTab = $this->manager->getRepository(Location::class)->findAll();
@@ -90,9 +111,9 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 6; $i++) {
 
             $date = date_create('2050-01-01');
-            $outing= new Outing();
+            $outing = new Outing();
             $outing->setName($this->faker->company)
-                ->setDateTimeStartOuting($this->faker->dateTime($max ='now', $timezone = null))
+                ->setDateTimeStartOuting($this->faker->dateTime($max = 'now', $timezone = null))
                 ->setDuration(90)
                 ->setRegistrationDeadLine($date)
                 ->setMaxRegistrations(10)
@@ -109,7 +130,6 @@ class AppFixtures extends Fixture
 
         //$users = $this->manager->getRepository(User::class)->findAll();
     }
-
 
 
 }
