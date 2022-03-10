@@ -80,7 +80,10 @@ Longitude : {{ outing.location.longitude}}
    {# outing.participants permet de récupérer les participants inscrits dans la sortie séléctionné #}
   {% for p in outing.participants %}
    <tr>
-        <td>{{ p.pseudo }} </td> 
+        <td>
+        <a href="{{ path('show_participant',{id:p.id })}}">{{ p.pseudo}}
+                </a></td> 
+
         <td>{{ p.name }}</td>
    </tr>
 {% endfor %}

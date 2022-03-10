@@ -49,21 +49,11 @@ class ModifyOutingType extends AbstractType
             'choice_label'=>'name',
             'label' => 'Lieu',
 
-                'choice_label'=>'address',
-                'label' => 'adresse',
-
-          ],
+          ])
         // [
         //           array('class' => 'App\Entity\Location', 'choice_label' => 'address')
         // ]
-             )
-            
-            
-             //->add('location', EntityType::class, array('class' => 'App\Entity\Location', 'choice_label' => 'address'))
-
-          
-
-
+        //->add('location', EntityType::class, array('class' => 'App\Entity\Location', 'choice_label' => 'address'))
         //  ->add('participants')
         //  ->add('organizer')
         //->add('state', EntityType::class,[

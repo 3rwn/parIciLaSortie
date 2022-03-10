@@ -3,9 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Outing;
-use App\Entity\Participant;
 use App\Form\ModifyOutingType;
-use App\Repository\ParticipantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,18 +37,25 @@ class OutingController extends AbstractController
         ]);
     }
 
-        /**
+
+    //Méthode permettant de récupérer les infos d'une sortie après modification et vérification pour update dans la BDD
+
+    /**
      * @Route("/modifyouting/{id}", name="outing_update")
      */
-    public function updateOuting(Outing $o, Request $req, EntityManagerInterface $em): Response
+    public function updateOuting(Outing $o, Request $req, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ModifyOutingType::class, $o);
+        $form->setData($o);
         $form->handleRequest($req);
-        if ($form->isSubmitted()) {
-  
-                $em->flush();
-              return $this->redirectToRoute('home');
-              
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $date = $date = new \DateTime();
+            if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
+                $entityManager->persist($o);
+                $entityManager->flush();
+            return $this->redirectToRoute('home');
+            }
           }
   
           return $this->render('outing/modifyouting.html.twig',
