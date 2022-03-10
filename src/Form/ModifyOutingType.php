@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Location;
 use App\Entity\Outing;
 use App\Entity\State;
@@ -43,10 +44,22 @@ class ModifyOutingType extends AbstractType
           ->add('campus', null, ['choice_label' => 'name'])  
 
           ->add('location', EntityType::class,[
+              
             'class'=>Location::class,
             'choice_label'=>'name',
-            'label' => 'Lieu'
-             ])
+            'label' => 'Lieu',
+
+                'choice_label'=>'address',
+                'label' => 'adresse',
+
+          ],
+        // [
+        //           array('class' => 'App\Entity\Location', 'choice_label' => 'address')
+        // ]
+             )
+            
+            
+             //->add('location', EntityType::class, array('class' => 'App\Entity\Location', 'choice_label' => 'address'))
 
           
 
