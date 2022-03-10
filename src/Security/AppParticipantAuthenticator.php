@@ -38,6 +38,7 @@ class AppParticipantAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($identifiant),
             new PasswordCredentials($request->request->get('password', '')),
             [
+
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
 
             ]

@@ -65,6 +65,7 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
 
     public function loadUserByUsername(string $username)
     {
+        loadUserByIdentifier();
     }
 
     /**

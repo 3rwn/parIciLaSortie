@@ -20,9 +20,12 @@
         <div class="row"></div>
         <div class="offset-1"></div>
         <div class="col">
+            {% if participant.profilePictureFileName %}
+            <img src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}" width="150px">
+            {% else %}
             <img src="https://previews.123rf.com/images/diddleman/diddleman1204/diddleman120400002/13058158-no-user-profile-picture-hand-drawn-.jpg?fj=1"
                  width="150px"></img>
-            {#    <img src="{{ path (participant.photo) }}"> #}
+                {% endif %}
 
         </div>
         <div class="offset-1"></div>
