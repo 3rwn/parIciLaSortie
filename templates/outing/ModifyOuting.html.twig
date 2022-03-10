@@ -7,8 +7,12 @@ Modifier une sortie
 
 
 {% block body %}
+<div class="col">
 {{ form_start(formulaire)}}
 {{ form_widget(formulaire)}}
-<button class="btn btn-info" type="submit">Modifier</button>
+<button class="btn btn-info" type="submit">Enregistrer</button>
+<button class="btn btn-success" type="submit">Publier la sortie</button>
+<button class="btn btn-danger" type="submit">Supprimer</button>
+<button class="btn btn-warning" type="submit">Annuler</button>
 {{ form_end(formulaire)}}
 {% endblock %}
