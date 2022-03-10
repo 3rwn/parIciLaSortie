@@ -2,8 +2,61 @@
 
 {% block titre %}Mon Profil{% endblock %}
 
-{% block body %}
 
-    {{ participant.name }}
+{% block body %}
+    <div class="container mb-5">
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <br>
+    <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
+        <h1> {{ participant.pseudo }} </h1>
+    </div>
+    <br>
+    {# DIV qui permet d'afficher les informations d'un participant' #}
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
+        <div class="row"></div>
+        <div class="offset-1"></div>
+        <div class="col">
+            <img src="https://previews.123rf.com/images/diddleman/diddleman1204/diddleman120400002/13058158-no-user-profile-picture-hand-drawn-.jpg?fj=1"
+                 width="150px"></img>
+            {#    <img src="{{ path (participant.photo) }}"> #}
+
+        </div>
+        <div class="offset-1"></div>
+
+        <div class="col text-lg-start">
+
+            <p>
+                Prénom : {{ participant.firstname }}
+            </p>
+            <p>
+                Nom : {{ participant.name }}
+            </p>
+            <p>
+                Téléphone :
+                {% if participant.phoneNumber %}
+                    {{ participant.phoneNumber }}
+                {% else %}
+                    non renseigné
+
+                {% endif %}
+            </p>
+            <p>
+                Email : {{ participant.email }}
+            </p>
+            <p>
+                Campus : {{ participant.campus.name }}
+            </p>
+        </div>
+
+
+    </div>
+
+
+
+
 
 {% endblock %}
