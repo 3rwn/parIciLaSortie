@@ -6,18 +6,16 @@
 
 {% block body %}
 <br>
-<br>
-
+<div>
 <h1> {{ outing.name}} </h1>
-
+</div>
 <br>
-<br>
-
+{# Première DIV qui permet d'afficher les informations de la sortie #}
 <div class="container text-white">
   <div class="row">
     <div class="col">
     <p>
-    Nom de la sortie {{ outing.name}}
+    Nom de la sortie : {{ outing.name}}
     </p>
     <p>
 Date et heure de la sortie : {{ outing.dateTimeStartOuting  | date('d/m/Y h:m:s')}}
@@ -63,7 +61,7 @@ Longitude : {{ outing.location.longitude}}
 <br>
 <br>
 
-
+{# Deuxième DIV qui permet d'afficher les participants inscrits #}
 <div class="col-4 text-white">
 <div class="table-wrapper-scroll-y my-custom-scrollbar">
     Liste de participants inscrits
@@ -74,6 +72,7 @@ Longitude : {{ outing.location.longitude}}
             <th>Pseudo</th>
             <th>Nom</th>
    </tr>
+   {# outing.participants permet de récupérer les participants inscrits dans la sortie séléctionné #}
   {% for p in outing.participants %}
    <tr>
         <td>{{ p.pseudo }}</td> 
