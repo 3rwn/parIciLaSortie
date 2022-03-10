@@ -21,15 +21,15 @@ class ParticipantUpdateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pseudo', null,  ['label' => 'Pseudo','attr' => ['pattern' => "[a-zA-Z0-9]{4,50}"]])
-            ->add('firstName', null, ['label' => 'Prénom', 'attr' => ['pattern' => "[a-zA-Z]{1,50}"]])
-            ->add('name', null, ['label' => 'Nom', 'attr' => ['pattern' => "[a-zA-Z]{1,50}"]])
-            ->add('phoneNumber', null, ['label' => 'Téléphone', 'attr' => ['pattern' => "[0-9]{1,20}", 'placeholder' => 'Saisissez votre télépone']])
-            ->add('email', null, ['label' => 'Mail', 'attr' => ['pattern' => "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"]])
+            ->add('pseudo', null,  ['label' => 'Pseudo'])
+            ->add('firstName', null, ['label' => 'Prénom'])
+            ->add('name', null, ['label' => 'Nom'])
+            ->add('phoneNumber', null, ['label' => 'Téléphone', 'attr' => ['placeholder' => 'Saisissez votre télépone']])
+            ->add('email', null, ['label' => 'Mail'])
             ->add('password', null, ['mapped' => false, 'label' => 'Mot de passe', 'required' => false])
             ->add('confirmPassword', null, ['mapped' => false, 'label' => 'Confirmation',
-                'attr' => ['placeholder' => 'Confirmez votre mdp'],
-                'constraints' => [new EqualTo('password')]
+                'attr' => ['placeholder' => 'Confirmez votre mdp']
+
             ])
             ->add('campus', null, ['choice_label' => 'name'])
             ->add('profilePicture', null, ["mapped" => false, 'label' => 'Photo de profile']);

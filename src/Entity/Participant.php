@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\ParticipantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,6 +24,9 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message = "Votre mail n'est pas valide."
+     * )
      */
     private $email;
 
@@ -39,21 +43,55 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(
+     *     message = "Votre prénome est obligatoire."
+     * )
+     * @Assert\Length(
+     * min = 2,
+     * max = 50,
+     * minMessage = "Votre nom doit contenir au minimum  2 caractéres",
+     * maxMessage = "Votre nom doit contenir au maximum 50 caractéres"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(
+     *     message = "Votre prénom est obligatoire."
+     * )
+     * @Assert\Length(
+     * min = 2,
+     * max = 50,
+     * minMessage = "Votre prénom doit contenir au minimum  2 caractéres"
+     * )
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
+     * @Assert\NotBlank(
+     *     message = "Votre pseudo est obligatoire."
+     * )
+     * @Assert\Length(
+     * min = 2,
+     * max = 20,
+     * minMessage = "Votre pseudo doit contenir au minimum  2 caractéres"
+     * )
      */
     private $pseudo;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @Assert\Regex(
+     *      pattern="/^[0-9]*$/",
+     *      message="Votre numéro ne doit contenir que des chiffres."
+     * )
+     * @Assert\Length(
+     * min = 2,
+     * max = 20,
+     * minMessage = "Votre numéro doit contenir au minimum 2 caractéres"
+     * )
      */
     private $phoneNumber;
 
