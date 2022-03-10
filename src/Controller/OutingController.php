@@ -59,7 +59,7 @@ class OutingController extends AbstractController
           }
   
           return $this->render('outing/modifyouting.html.twig',
-           [ 'formulaire'=> $form->createView()]);
+           [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
       }
   
     
