@@ -27,19 +27,20 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * Fonction permettant d'afficher le profil du User connecté et permettant de modifier le profil
      * @Route("/MyProfile",  name="my_profile")
      */
-    public function showMyProfile(EntityManagerInterface $em, Request $req, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppParticipantAuthenticator $authenticator): Response
+    public function showMyProfile(EntityManagerInterface $entityManager, Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppParticipantAuthenticator $authenticator): Response
     {
         $participant = $this->getUser();
         $form = $this->createForm(ParticipantUpdateType::class, $participant);
         $form->setData($participant);
-        $form->handleRequest($req);
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('password')->getData() == '') {
-                $em->persist($participant);
-                $em->flush();
+                $entityManager->persist($participant);
+                $entityManager->flush();
                 return $this->redirectToRoute('home');
             }
             $participant->setPassword(
@@ -48,10 +49,10 @@ class ParticipantController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $em->persist($participant);
-            $em->flush();
+            $entityManager->persist($participant);
+            $entityManager->flush();
 
-            return $userAuthenticator->authenticateUser($participant, $authenticator, $req);
+            return $userAuthenticator->authenticateUser($participant, $authenticator, $request);
             $this->redirectToRoute('home');
         }
 
@@ -62,12 +63,13 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * Fonction permettant d'afficher n'importe quel participant grâce à son id
      * @Route("/ShowParticipant/{id}", requirements={"id"="\d+"}, name="show_participant")
      */
-    public function showParticipant(Participant $p): Response
+    public function showParticipant(Participant $participant): Response
     {
         return $this->render('participant/ShowParticipant.html.twig', [
-            'participant' => $p,
+            'participant' => $participant,
         ]);
     }
 }

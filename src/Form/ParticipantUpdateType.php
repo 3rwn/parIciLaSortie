@@ -12,26 +12,16 @@ use Symfony\Component\Validator\Constraints\EqualTo;
 
 class ParticipantUpdateType extends AbstractType
 {
-//    private $security;
-//    private $token;
 
-//    public function __construct(Security $security)
-//    {
-//        $this->security=$security;
-//    }
-
-//    public function __construct(TokenStorageInterface $token)
-//    {
-//        $this->token = $token;
-//    }
-
+    /*
+     * Formulaire qui récupère les informations du User connecté
+     * Possibilité de mofifier n'importe quel paramètre indépendamment des autres
+     * Vérifications des données cotés Front
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-//        $user = $this->security->getUser();
-//        $user = new Participant();
-//        $user = $this->token->getToken()->getUser();
         $builder
-            ->add('pseudo', null, ['attr' => ['pattern' => "[a-zA-Z0-9]{4,50}"]])
+            ->add('pseudo', null,  ['label' => 'Pseudo','attr' => ['pattern' => "[a-zA-Z0-9]{4,50}"]])
             ->add('firstName', null, ['label' => 'Prénom', 'attr' => ['pattern' => "[a-zA-Z]{1,50}"]])
             ->add('name', null, ['label' => 'Nom', 'attr' => ['pattern' => "[a-zA-Z]{1,50}"]])
             ->add('phoneNumber', null, ['label' => 'Téléphone', 'attr' => ['pattern' => "[0-9]{1,20}", 'placeholder' => 'Saisissez votre télépone']])
@@ -45,6 +35,9 @@ class ParticipantUpdateType extends AbstractType
             ->add('profilePicture', null, ["mapped" => false, 'label' => 'Photo de profile']);
     }
 
+    /*
+     * Le formulaire est lié à la classe Participant
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
