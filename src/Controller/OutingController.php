@@ -57,11 +57,11 @@ class OutingController extends AbstractController
             return $this->redirectToRoute('home');
             }
           }
-  
+
           return $this->render('outing/modifyouting.html.twig',
            [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
       }
-  
+
     //Méthode permettant de supprimer une sortie par son id et de la supprimer dans la BDD
 
     /**
@@ -81,14 +81,83 @@ class OutingController extends AbstractController
             return $this->redirectToRoute('home');
             }
           }
-  
+
           return $this->render('outing/modifyouting.html.twig',
            [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
       }
-    
 
-    
-}
+
+      /******************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /******************************************************/
+
+
+
+
+
+
+
+
+
+    /******************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+    //test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}/******************************************************/
 
 
 
