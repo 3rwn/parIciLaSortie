@@ -29,7 +29,10 @@ Modifier une sortie
 {{ form_row(formulaire.campus)}}
 {{ form_row(formulaire.location)}}
 {{outing.location.address}}
-{{}}
+{{outing.location.city.postalcode}}
+{{outing.location.longitude}}
+{{outing.location.latitude}}
+
 
 </div>
 {{ form_widget(formulaire)}}
