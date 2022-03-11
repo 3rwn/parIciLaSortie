@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\OutingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,6 +22,14 @@ class Outing
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\NotBlank(
+     *     message = "Le nom de la sortie est obligatoire."
+     * )
+     * @Assert\Length(
+     * min = 2,
+     * max = 50,
+     * minMessage = "Le nom de la sortie doit contenir au minimum  2 caractéres"
+     * )
      */
     private $name;
 

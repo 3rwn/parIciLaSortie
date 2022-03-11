@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,7 +22,8 @@ class ModifyOutingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',null, ['label' => 'Nom de la sortie'])
+            ->add('name', TextType::class,
+            ['label' => 'Nom de la sortie'])
 
             ->add('dateTimeStartOuting', DateTimeType::class,[
                 'label' => 'Date et heure de la sortie',
@@ -49,7 +51,6 @@ class ModifyOutingType extends AbstractType
             'class'=>Location::class,
             'choice_label'=>'name',
             'label' => 'Lieu',
-
           ])
          
         // [

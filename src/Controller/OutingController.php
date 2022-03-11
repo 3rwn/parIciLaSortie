@@ -40,6 +40,7 @@ class OutingController extends AbstractController
 
 
     //Méthode permettant de récupérer les infos d'une sortie après modification et vérification pour update dans la BDD
+    //Méthode servant dans la page ModifyOuting.html.twig
 
     /**
      * @Route("/modifyouting/{id}", name="outing_update")
@@ -50,7 +51,7 @@ class OutingController extends AbstractController
         $form->setData($o);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $date = $date = new \DateTime();
             if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
                 $entityManager->persist($o);
@@ -64,6 +65,7 @@ class OutingController extends AbstractController
       }
 
     //Méthode permettant de supprimer une sortie par son id et de la supprimer dans la BDD
+    //Méthode servant dans la page ModifyOuting.html.twig
 
     /**
      * @Route("/deleteouting/{id}", name="outing_delete")

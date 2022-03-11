@@ -28,7 +28,9 @@ Modifier une sortie
 <div class="col-md-6">
 {{ form_row(formulaire.campus)}}
 {{ form_row(formulaire.location)}}
-<div class="address">{{outing.location.address}}</div>
+<p>
+Adresse : {{outing.location.address}}
+</p>
 <p>
 Code postal : {{ outing.location.city.postalcode}}
 </p>
@@ -45,13 +47,15 @@ Longitude : {{ outing.location.longitude}}
 </div>
 <div class="col-md-6">
 {{ form_widget(formulaire)}}
-<button class="btn btn-primary" type="submit" name="outing_update">Modifier</button>
+<div class="col-md-6">
+<a href="{{path('outing_update',{'id':outing.id})}}" class="btn btn-primary">Modifier</a>
 <button class="btn btn-success" type="submit">Publier la sortie</button>
 <a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
-<button class="btn btn-warning" type="submit">Annuler</button>
-{{ form_end(formulaire)}}
-
+<a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
 </div>
+{{ form_end(formulaire)}}
+</div>
+
 <div class="container mb-5">
         <br>
         <br>
