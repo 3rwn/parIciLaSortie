@@ -6,6 +6,7 @@ use App\Entity\City;
 use App\Entity\Location;
 use App\Entity\Outing;
 use App\Entity\State;
+use Proxies\__CG__\App\Entity\City as EntityCity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -20,7 +21,7 @@ class ModifyOutingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',null, ['label' => 'Nom de la sortie', 'attr' => ['pattern' => "[a-zA-Z]{1,50}"]])
+            ->add('name',null, ['label' => 'Nom de la sortie'])
 
             ->add('dateTimeStartOuting', DateTimeType::class,[
                 'label' => 'Date et heure de la sortie',
@@ -50,6 +51,7 @@ class ModifyOutingType extends AbstractType
             'label' => 'Lieu',
 
           ])
+         
         // [
         //           array('class' => 'App\Entity\Location', 'choice_label' => 'address')
         // ]

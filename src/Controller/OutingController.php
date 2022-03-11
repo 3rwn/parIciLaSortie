@@ -68,25 +68,17 @@ class OutingController extends AbstractController
     /**
      * @Route("/deleteouting/{id}", name="outing_delete")
      */
-    public function deleteOuting(Outing $o, Request $req, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(ModifyOutingType::class, $o);
-        $form->setData($o);
-        $form->handleRequest($req);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $date = $date = new \DateTime();
-            if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
-                $entityManager->persist($o);
-                $entityManager->flush();
-            return $this->redirectToRoute('home');
-            }
-          }
-
-          return $this->render('outing/modifyouting.html.twig',
-           [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
-      }
-
+    public function deleteOuting(Outing $o, EntityManagerInterface $entityManager): Response
+    {    
+          
+           $entityManager->remove($o);
+           $entityManager->flush(); // SAVE execute la requete SQL
+    
+           //dd($p->getId());
+           // rediriger vers home
+           return $this->redirectToRoute('home'); 
+            
+        }
 
       /******************************************************/
 

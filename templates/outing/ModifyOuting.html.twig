@@ -16,7 +16,7 @@ Modifier une sortie
     <br>
 
 <div class="row">
-<div class="col">
+<div class="col-md-6">
 {{ form_start(formulaire)}}
 {{ form_row(formulaire.name)}}
 {{ form_row(formulaire.dateTimeStartOuting)}}
@@ -25,23 +25,32 @@ Modifier une sortie
 {{ form_row(formulaire.duration)}}
 {{ form_row(formulaire.description)}}
 </div>
-<div class="col">
+<div class="col-md-6">
 {{ form_row(formulaire.campus)}}
 {{ form_row(formulaire.location)}}
-{{outing.location.address}}
-{{outing.location.city.postalcode}}
-{{outing.location.longitude}}
-{{outing.location.latitude}}
-
-
+<div class="address">{{outing.location.address}}</div>
+<p>
+Code postal : {{ outing.location.city.postalcode}}
+</p>
+<p>
+Ville : {{ outing.location.city.name}}
+</p>
+<p>
+Latitude  : {{ outing.location.latitude}} 
+</p>
+<p>
+Longitude : {{ outing.location.longitude}}
+</p>
 </div>
+</div>
+<div class="col-md-6">
 {{ form_widget(formulaire)}}
-
-<button class="btn btn-primary" type="submit" name="update">Modifier</button>
+<button class="btn btn-primary" type="submit" name="outing_update">Modifier</button>
 <button class="btn btn-success" type="submit">Publier la sortie</button>
-<button class="btn btn-danger" type="submit">Supprimer</button>
+<a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
 <button class="btn btn-warning" type="submit">Annuler</button>
 {{ form_end(formulaire)}}
+
 </div>
 <div class="container mb-5">
         <br>
