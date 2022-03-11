@@ -12,7 +12,17 @@
     <br>
     <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
         <h1> Créer une sortie </h1>
-    </div>
+        </div>
     <br>
+    <div class="row">
+<div class="col-mb-6 text-white">
+        {{ form_start (formulaire)}}
+        {{ form_widget (formulaire)}}
+        <button class="btn btn-primary" type="submit" name="update">Enregistrer</button>
+        <button class="btn btn-success" type="submit" name="update">Publier la sortie</button>
+        <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
+        {{ form_end (formulaire)}}
+    </div>
+    </div>
 
 {% endblock %}

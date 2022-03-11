@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Outing;
+use App\Entity\State;
 use App\Form\FilterFormType;
 use App\Form\ModifyOutingType;
 use App\Repository\OutingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,17 +49,31 @@ class OutingController extends AbstractController
     /**
      * @Route("/modifyouting/{id}", name="outing_update")
      */
-    public function updateOuting(Outing $o, Request $req, EntityManagerInterface $entityManager): Response
+    public function updateOuting(Outing $o, State $state,Request $req, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ModifyOutingType::class, $o);
         $form->setData($o);
         $form->handleRequest($req);
 
-        if ($form->isSubmitted()) {
+        if ($form->get('save_and_add')->isSubmitted() && $form->isValid()) {
+            $date = $date = new \DateTime();
+
+            if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
+            $o->getState()->setWording('Ouverte');
+            $entityManager->persist($o);
+            $entityManager->flush();
+            $this->addFlash('success', 'Vous avez publier votre sortie.');
+            return $this->redirectToRoute('home');
+            }
+            }
+            
+        if ($form->isSubmitted() && $form->isValid()) {
             $date = $date = new \DateTime();
             if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
+                $o->getState()->setWording('Créer');
                 $entityManager->persist($o);
                 $entityManager->flush();
+                $this->addFlash('success', 'Vous avez modifier la sortie.');
             return $this->redirectToRoute('home');
             }
           }
@@ -77,12 +93,41 @@ class OutingController extends AbstractController
           
            $entityManager->remove($o);
            $entityManager->flush(); // SAVE execute la requete SQL
-    
+           $this->addFlash('success', 'Vous avez bien supprimer la.');
            //dd($p->getId());
            // rediriger vers home
            return $this->redirectToRoute('home'); 
             
         }
+
+    //Méthode permettant de créer une sortie et l'ajout dans la BDD
+    //Méthode servant dans la page CreateOuting.html.twig
+
+    /**
+     * @Route("/createouting/", name="outing_create")
+     */
+    public function createOuting(Request $req, EntityManagerInterface $entityManager): Response
+    {
+        $o = new Outing(); 
+        $form = $this->createForm(CreateOutingType::class, $o);
+        $form->setData($o);
+        $form->handleRequest($req);
+        $o->setOrganizer($this->getUser());
+        $o->addParticipant($this->getUser());
+        if ($form->isSubmitted() && $form->isValid()) {
+            $date = $date = new \DateTime();
+            if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
+                
+                $entityManager->persist($o);
+                $entityManager->flush();
+                $this->addFlash('success', 'Vous avez créer une sortie.');
+            return $this->redirectToRoute('home');
+            }
+          }
+
+          return $this->render('outing/createouting.html.twig',
+           [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
+      }
 
       /******************************************************/
 

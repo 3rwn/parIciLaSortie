@@ -6,7 +6,7 @@ Modifier une sortie
 {% endblock %}
 
 
-{% block body %}
+{# {% block body %}
 <div class="container mb-5">
         <br>
         <br>
@@ -14,20 +14,15 @@ Modifier une sortie
         <br>
     </div>
     <br>
-
-<div class="row">
-<div class="col-md-6">
-{{ form_start(formulaire)}}
-{{ form_row(formulaire.name)}}
-{{ form_row(formulaire.dateTimeStartOuting)}}
-{{ form_row(formulaire.registrationDeadLine)}}
-{{ form_row(formulaire.maxRegistrations)}}
-{{ form_row(formulaire.duration)}}
-{{ form_row(formulaire.description)}}
 </div>
-<div class="col-md-6">
-{{ form_row(formulaire.campus)}}
-{{ form_row(formulaire.location)}}
+
+
+<div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
+<div class="row">
+<div class="col-md-6 text-white">
+{{ form_start(formulaire)}}
+{{form(formulaire.name)}}
+
 <p>
 Adresse : {{outing.location.address}}
 </p>
@@ -45,14 +40,14 @@ Longitude : {{ outing.location.longitude}}
 </p>
 </div>
 </div>
-<div class="col-md-6">
 {{ form_widget(formulaire)}}
-<div class="col-md-6">
-<a href="{{path('outing_update',{'id':outing.id})}}" class="btn btn-primary">Modifier</a>
+<div class="col-md-6 text-white">
+<button class="btn btn-primary" type="submit">Modifier</button>
 <button class="btn btn-success" type="submit">Publier la sortie</button>
 <a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
 <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
 </div>
+{{ form_rest(formulaire) }}
 {{ form_end(formulaire)}}
 </div>
 
@@ -62,4 +57,43 @@ Longitude : {{ outing.location.longitude}}
         <br>
         <br>
     </div>
-{% endblock %}
+{% endblock %} #}
+
+
+{% block body %}
+<div class="container mb-5">
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <br>
+</div>
+        <h1 class="text-center">Modifier la sortie</h1>
+        <h1 class="text-center">{{ outing.name}}</h1>
+       <div class="container col-md-6 text-center text-white">
+        {{ form_start(formulaire) }}
+        {{ form_row(formulaire.name)}}
+        {{ form_row(formulaire.dateTimeStartOuting)}}
+        {{ form_row(formulaire.registrationDeadLine)}}
+        {{ form_row(formulaire.duration)}} 
+        {{ form_row(formulaire.maxRegistrations)}}
+        {{ form_row(formulaire.description)}}
+        {{ form_row(formulaire.location)}}
+        {# {{ form_row(formulaire.status)}} #}
+        {{ form_row(formulaire.campus)}}
+        {# {{ form_row(activity.organizer)}} #}
+        {# {{ form_row(activity.participant)}} #}
+        {{ form_widget(formulaire) }}
+        <div class="align-items-center">
+        <a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
+        <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
+        {{ form_end(formulaire) }}
+        </div>
+        <div class="container mb-5">
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    {% endblock %}
