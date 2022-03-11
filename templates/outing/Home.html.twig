@@ -16,25 +16,28 @@
 
     <div class="affichageTableau text-white">
 
-        <table>
+        <table class="table table-warning">
             <thead>
             <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Clôture</th>
-                <th>Inscrits/places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Clôture</th>
+                <th scope="col">Inscrits/places</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for outing in outings %}
             {#        {% set nbInscrit = outing.participants.size() %} #}
             <tr>
-
-                <td>{{ outing.name }}</td>
+                {% if outing.organizer.id == organizer.id and outing.state.id == '1' %}
+                <td><a href="{{ path('outing_update',{id:outing.id}) }}">{{ outing.name }}</a></td>
+                {% else %}
+                <td><a href="{{ path('outing_detail',{id:outing.id}) }}">{{ outing.name }}</a></td>
+                {% endif %}
                 <td>{{ outing.dateTimeStartOuting | date('d/m/Y h:m:s') }}</td>
                 <td>{{ outing.registrationDeadline | date('d/m/Y') }}</td>
                 <td>{{ outing.participants.count() }}/{{ outing.maxRegistrations }}</td>
