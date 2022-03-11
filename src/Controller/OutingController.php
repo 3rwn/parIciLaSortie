@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class OutingController extends AbstractController
 {
@@ -129,11 +130,13 @@ class OutingController extends AbstractController
     /**
      * @Route("/home/", name="home")
      */
-    public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager): Response
+    public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager, Security $security): Response
     {
+        $user = $security->getUser();
+        $criteria = ['campus' => '1', 'organizer' => true];
         $organizer = $this->getUser();
         $form = null;
-        $outings = $outingRepository->findAll();
+        $outings = $outingRepository->findByFilterOuting($criteria,$user);
         $actions = ['Afficher', 'S\'inscrire'];
 
         return $this->render('outing/home.html.twig', [

@@ -7,12 +7,14 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method Outing|null find($id, $lockMode = null, $lockVersion = null)
  * @method Outing|null findOneBy(array $criteria, array $orderBy = null)
  * @method Outing[]    findAll()
  * @method Outing[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
  */
 class OutingRepository extends ServiceEntityRepository
 {
@@ -45,22 +47,28 @@ class OutingRepository extends ServiceEntityRepository
         }
     }
 
-     /**
-      * @return Outing[] Returns an array of Outing objects
-      * en charge de filtrer les recherches de la page Home
-      */
 
-    public function findByFilter($value)
+
+    /**
+      * @return Outing[] Returns an array of Outing objects
+     */
+
+    public function findByFilterOuting($criteria, $user)
     {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $outings = null;
+
+        if ($criteria['organizer']){
+            $outings =  $this->createQueryBuilder('o')
+                ->Where('o.campus = :campus')
+                ->andWhere('o.organizer = :user')
+                ->setParameters(['campus'=> $criteria['campus'],'user' => $user])
+                ->getQuery()
+                ->getResult();
+        }
+        return $outings
         ;
     }
+
 
 
 
