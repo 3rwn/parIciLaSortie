@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}
     Home
-{%  endblock %}
+{% endblock %}
 {% block body %}
     <div class="container mb-5">
         <br>
@@ -12,6 +12,60 @@
     <br>
     <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
         <h1> Home </h1>
+    </div>
+
+    <div class="affichageTableau text-white">
+
+        <table>
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>Inscrits/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for outing in outings %}
+            {#        {% set nbInscrit = outing.participants.size() %} #}
+            <tr>
+
+                <td>{{ outing.name }}</td>
+                <td>{{ outing.dateTimeStartOuting | date('d/m/Y h:m:s') }}</td>
+                <td>{{ outing.registrationDeadline | date('d/m/Y') }}</td>
+                <td>{{ outing.participants.count() }}/{{ outing.maxRegistrations }}</td>
+                <td>{{ outing.state.wording }}</td>
+                {% set break = false %}
+                {% for participant in outing.participants %}
+                    {% if not break %}
+                        {% if participant.id == organizer.id %}
+                            {% set break = true %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                {% if break %}
+                    <td>inscrit</td>
+                {% else %}
+                    <td>non inscrit</td>
+                {% endif %}
+                <td><a href="{{ path('show_participant',{id:outing.organizer.id }) }}">{{ outing.organizer.pseudo }}</a>
+                </td>
+
+                <td>{% for action in actions %}
+                    <a href="#">{{ action }}</a>
+                    {% endfor %}
+                </td>
+
+            </tr>
+
+            </tbody>
+            {% endfor %}
+
+        </table>
     </div>
     <br>
 

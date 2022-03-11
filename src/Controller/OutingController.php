@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Outing;
 use App\Form\ModifyOutingType;
+use App\Repository\OutingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -126,30 +127,28 @@ class OutingController extends AbstractController
 
 
 
-
     /******************************************************/
 
 
+    // Methode permettant d'afficher les sorties avec un filtre
+    //Methode servant dans la page home.html.twig
+    /**
+     * @Route("/home/", name="home")
+     */
+    public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager): Response
+    {
+        $organizer = $this->getUser();
+        $form = null;
+        $outings = $outingRepository->findAll();
+        $actions = ['Afficher', 'S\'inscrire'];
 
-
-
-
-
-
-
-
-
-
-    //test
-    //test
-
-
-
-
-
-
-
-
+        return $this->render('outing/home.html.twig', [
+           // 'formulaire'=> $form->createView(),
+            'outings'=> $outings,
+            'organizer' => $organizer,
+            'actions' => $actions
+        ]);
+    }
 
 
 

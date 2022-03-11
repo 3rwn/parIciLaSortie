@@ -45,6 +45,25 @@ class OutingRepository extends ServiceEntityRepository
         }
     }
 
+     /**
+      * @return Outing[] Returns an array of Outing objects
+      * en charge de filtrer les recherches de la page Home
+      */
+
+    public function findByFilter($value)
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.exampleField = :val')
+            ->setParameter('val', $value)
+            ->orderBy('o.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
     // /**
     //  * @return Outing[] Returns an array of Outing objects
     //  */
