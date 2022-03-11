@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\ParticipantUpdateType;
 use App\Security\AppParticipantAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -46,13 +47,14 @@ class ParticipantController extends AbstractController
             $profilePictureFile = $form->get('profilePictureFileName')->getData();
             $password = $form->get('password')->getData();
 
-            if ($password == '' && $profilePictureFile == '') {
+            if ($password == null && $profilePictureFile == null) {
                 $entityManager->persist($participant);
                 $entityManager->flush();
+                $this->addFlash('success', 'Votre profil a été mis à jour.');
                 return $this->redirectToRoute('home');
             }
 
-            if($password && $profilePictureFile == '') {
+            if ($password && $profilePictureFile == '') {
                 $participant->setPassword(
                     $userPasswordHasher->hashPassword(
                         $participant,
@@ -61,15 +63,15 @@ class ParticipantController extends AbstractController
                 );
                 $entityManager->persist($participant);
                 $entityManager->flush();
-
+                $this->addFlash('success', 'Votre profil a été mis à jour.');
                 return $userAuthenticator->authenticateUser($participant, $authenticator, $request);
                 $this->redirectToRoute('home');
             }
 
-            if($password == '' && $profilePictureFile) {
+            if ($password == '' && $profilePictureFile) {
                 $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$profilePictureFile->guessExtension();
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
                 try {
                     $profilePictureFile->move(
                         $this->getParameter('profile_picture_directory'),
@@ -82,17 +84,41 @@ class ParticipantController extends AbstractController
 
                 $entityManager->persist($participant);
                 $entityManager->flush();
+                $this->addFlash('success', 'Votre profil a été mis à jour.');
                 return $this->redirectToRoute('home');
             }
-            if($password && $profilePictureFile) {
+            if ($password && $profilePictureFile) {
+                $participant->setPassword(
+                    $userPasswordHasher->hashPassword(
+                        $participant,
+                        $form->get('password')->getData()
+                    )
+                );
+                $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $profilePictureFile->guessExtension();
+                try {
+                    $profilePictureFile->move(
+                        $this->getParameter('profile_picture_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+
+                }
+                $participant->setProfilePictureFileName($newFilename);
+                $entityManager->persist($participant);
+                $entityManager->flush();
+                $this->addFlash('success', 'Votre profil a été mis à jour.');
+                return $this->redirectToRoute('home');
 
             }
-            }
+
+        }
 
         return $this->render('participant/MyProfile.html.twig', [
             'participant' => $participant,
             'formulaire' => $form->createView(),]);
-        }
+    }
 
     /**
      * Fonction permettant d'afficher n'importe quel participant grâce à son id

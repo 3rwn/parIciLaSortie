@@ -34,7 +34,7 @@ class ParticipantUpdateType extends AbstractType
                 'type' => PasswordType::class,
                 'invalid_message' => 'Le mot de passe et la confirmation ne correspondent pas.',
                 'options' => ['attr' => ['placeholder' => 'Entrez votre nouveau mot de passe','class' => 'password-field']],
-                'required' => true,
+                'required' => false,
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation'],
             ])
