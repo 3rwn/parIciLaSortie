@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Outing;
+use App\Form\FilterFormType;
 use App\Form\ModifyOutingType;
 use App\Repository\OutingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -132,19 +133,34 @@ class OutingController extends AbstractController
      */
     public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager, Security $security): Response
     {
+        $form = $this->createForm(FilterFormType::class);
+        $form->handleRequest($req);
         $user = $security->getUser();
         $criteria = ['campus' => '1', 'organizer' => true];
         $organizer = $this->getUser();
-        $form = null;
-        $outings = $outingRepository->findByFilterOuting($criteria,$user);
+        $outings = null;
+
         $actions = ['Afficher', 'S\'inscrire'];
 
+        if ($form->isSubmitted()) {
+            $criteria=$form->getData();
+//          dd($criteria);
+            $outings = $outingRepository->findByFilterOuting($criteria,$user);
+            return $this->render('outing/home.html.twig', [
+                'outings'=> $outings,
+                'organizer' => $organizer,
+                'actions' => $actions,
+                'formulaire'=>$form->createView()
+            ]);
+
+        }
         return $this->render('outing/home.html.twig', [
-           // 'formulaire'=> $form->createView(),
             'outings'=> $outings,
             'organizer' => $organizer,
-            'actions' => $actions
+            'actions' => $actions,
+            'formulaire'=>$form->createView()
         ]);
+
     }
 
 

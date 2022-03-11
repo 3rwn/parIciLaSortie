@@ -18,8 +18,26 @@
             {{ message }}
         </div>
     {% endfor %}
+    <div class="row text-white">
+        <div class="col-md-6">
+            {{ form_start(formulaire) }}
+            {{ form_row(formulaire.campus)}}
+            {{ form_row(formulaire.outingNameLike)}}
+            {{ form_row(formulaire.startingDate)}}
+            {{ form_row(formulaire.endingDate)}}
+        </div>
+        <div class="col-md-6">
+            <br>
+            <br>
+            <br>
+            {{ form_row(formulaire.isOrganizer)}}
+            {{ form_row(formulaire.isRegister)}}
+            {{ form_row(formulaire.isNotRegister)}}
+            {{ form_row(formulaire.pastOutings)}}
+            {{ form_end(formulaire) }}
+        </div>
+    </div>
     <div class="affichageTableau text-white">
-
         <table class="table table-warning">
             <thead>
             <tr>
@@ -61,19 +79,14 @@
                 {% endif %}
                 <td><a href="{{ path('show_participant',{id:outing.organizer.id }) }}">{{ outing.organizer.pseudo }}</a>
                 </td>
-
                 <td>{% for action in actions %}
                     <a href="#">{{ action }}</a>
                     {% endfor %}
                 </td>
-
             </tr>
-
             </tbody>
             {% endfor %}
-
         </table>
     </div>
     <br>
-
 {% endblock %}

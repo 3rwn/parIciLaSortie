@@ -1,11 +1,13 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
-class Filter
+class FilterHome
 
 {
     /**
-     * @var
+     *
      *
      */
     private $campus;
@@ -45,43 +47,47 @@ class Filter
      */
     private $pastOutings;
 
-    /**
-     * @param $campus
-     * @param $outingNameLike
-     * @param $startingDate
-     * @param $endingDate
-     * @param $isOrganizer
-     * @param $isRegister
-     * @param $isNotRegister
-     * @param $pastOutings
-     */
-    public function __construct($campus, $outingNameLike, $startingDate, $endingDate, $isOrganizer, $isRegister, $isNotRegister, $pastOutings)
-    {
-        $this->campus = $campus;
-        $this->outingNameLike = $outingNameLike;
-        $this->startingDate = $startingDate;
-        $this->endingDate = $endingDate;
-        $this->isOrganizer = $isOrganizer;
-        $this->isRegister = $isRegister;
-        $this->isNotRegister = $isNotRegister;
-        $this->pastOutings = $pastOutings;
-    }
+//    /**
+//     * @param $campus
+//     * @param $outingNameLike
+//     * @param $startingDate
+//     * @param $endingDate
+//     * @param $isOrganizer
+//     * @param $isRegister
+//     * @param $isNotRegister
+//     * @param $pastOutings
+//     */
+//    public function __construct($campus, $outingNameLike, $startingDate, $endingDate, $isOrganizer, $isRegister, $isNotRegister, $pastOutings)
+//    {
+//        $this->campus = $campus;
+//        $this->outingNameLike = $outingNameLike;
+//        $this->startingDate = $startingDate;
+//        $this->endingDate = $endingDate;
+//        $this->isOrganizer = $isOrganizer;
+//        $this->isRegister = $isRegister;
+//        $this->isNotRegister = $isNotRegister;
+//        $this->pastOutings = $pastOutings;
+//    }
 
     /**
      * @return mixed
      */
-    public function getCampus(): ?\App\Entity\Campus
+    public function getCampus()
     {
         return $this->campus;
     }
 
+
+
     /**
      * @param mixed $campus
      */
-    public function setCampus(?\App\Entity\Campus $campus): void
+    public function setCampus($campus): void
     {
         $this->campus = $campus;
     }
+
+
 
     /**
      * @return mixed
@@ -93,7 +99,7 @@ class Filter
 
     /**
      * @param mixed $outingNameLike
-     * @return Filter
+     * @return FilterHome
      */
     public function setOutingNameLike($outingNameLike)
     {
@@ -111,7 +117,7 @@ class Filter
 
     /**
      * @param mixed $startingDate
-     * @return Filter
+     * @return FilterHome
      */
     public function setStartingDate($startingDate)
     {
@@ -129,7 +135,7 @@ class Filter
 
     /**
      * @param mixed $endingDate
-     * @return Filter
+     * @return FilterHome
      */
     public function setEndingDate($endingDate)
     {
@@ -147,7 +153,7 @@ class Filter
 
     /**
      * @param mixed $isOrganizer
-     * @return Filter
+     * @return FilterHome
      */
     public function setIsOrganizer($isOrganizer)
     {
@@ -165,7 +171,7 @@ class Filter
 
     /**
      * @param mixed $isRegister
-     * @return Filter
+     * @return FilterHome
      */
     public function setIsRegister($isRegister)
     {
@@ -183,7 +189,7 @@ class Filter
 
     /**
      * @param mixed $isNotRegister
-     * @return Filter
+     * @return FilterHome
      */
     public function setIsNotRegister($isNotRegister)
     {
@@ -201,7 +207,7 @@ class Filter
 
     /**
      * @param mixed $pastOutings
-     * @return Filter
+     * @return FilterHome
      */
     public function setPastOutings($pastOutings)
     {

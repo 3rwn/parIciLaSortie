@@ -56,12 +56,12 @@ class OutingRepository extends ServiceEntityRepository
     public function findByFilterOuting($criteria, $user)
     {
         $outings = null;
-
-        if ($criteria['organizer']){
+//        $criteria['isOrganizer']
+        if ($criteria['isOrganizer']){
             $outings =  $this->createQueryBuilder('o')
                 ->Where('o.campus = :campus')
                 ->andWhere('o.organizer = :user')
-                ->setParameters(['campus'=> $criteria['campus'],'user' => $user])
+                ->setParameters(['campus'=> $criteria['campus']->getCampus(),'user' => $user])
                 ->getQuery()
                 ->getResult();
         }
