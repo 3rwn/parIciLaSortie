@@ -6,6 +6,7 @@ use App\Repository\StateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * @ORM\Entity(repositoryClass=StateRepository::class)
@@ -37,6 +38,13 @@ class State
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $stateId ): self
+    {
+        $this->id = $stateId;
+
+        return $this;
     }
 
     public function getWording(): ?string

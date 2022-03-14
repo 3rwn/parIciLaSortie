@@ -8,6 +8,7 @@ use App\Form\CreateOutingType;
 use App\Form\FilterFormType;
 use App\Form\ModifyOutingType;
 use App\Repository\OutingRepository;
+use App\Repository\StateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,28 +51,27 @@ class OutingController extends AbstractController
     /**
      * @Route("/modifyouting/{id}", name="outing_update")
      */
-    public function updateOuting(Outing $o, State $state,Request $req, EntityManagerInterface $entityManager): Response
+    public function updateOuting(Outing $o,StateRepository $stateRepository, Request $req, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ModifyOutingType::class, $o);
         $form->setData($o);
         $form->handleRequest($req);
+        $date = $date = new \DateTime();
 
+    if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
+       
         if ($form->get('save_and_add')->isSubmitted() && $form->isValid()) {
-            $date = $date = new \DateTime();
-
-            if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
-            $o->getState()->setWording('Ouverte');
+            $state = $stateRepository->find(2);
+            $o->setState($state);
             $entityManager->persist($o);
             $entityManager->flush();
             $this->addFlash('success', 'Vous avez publier votre sortie.');
             return $this->redirectToRoute('home');
             }
-            }
             
-        if ($form->isSubmitted() && $form->isValid()) {
-            $date = $date = new \DateTime();
-            if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
-                $o->getState()->setWording('Créer');
+        if ($form->get('submit')->isSubmitted() && $form->isValid()) {
+            $state = $stateRepository->find(1);
+            $o->setState($state);
                 $entityManager->persist($o);
                 $entityManager->flush();
                 $this->addFlash('success', 'Vous avez modifier la sortie.');
@@ -115,6 +115,7 @@ class OutingController extends AbstractController
         $form->handleRequest($req);
         $o->setOrganizer($this->getUser());
         $o->addParticipant($this->getUser());
+
         if ($form->isSubmitted() && $form->isValid()) {
             $date = $date = new \DateTime();
             if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){

@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,6 +41,13 @@ class CreateOutingType extends AbstractType
                 'label' => 'Lieu',
               ])
             ->add('campus', null, ['choice_label' => 'name'])
+            ->add('enregistrer', SubmitType::class,[
+                'label' => 'Enregistrer'
+              ])
+              
+              ->add('save_and_add', SubmitType::class,[
+                  'label' => 'Publier la sortie'
+              ])
         ;
     }
 

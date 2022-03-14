@@ -84,8 +84,9 @@ Longitude : {{ outing.location.longitude}}
         {{ form_row(formulaire.campus)}}
         {# {{ form_row(activity.organizer)}} #}
         {# {{ form_row(activity.participant)}} #}
-        {{ form_widget(formulaire) }}
+        </div>
         <div class="align-items-center">
+         {{ form_widget(formulaire) }}
         <a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
         <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
         {{ form_end(formulaire) }}
