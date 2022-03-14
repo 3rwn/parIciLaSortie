@@ -60,7 +60,7 @@ class OutingController extends AbstractController
 
     if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
        
-        if ($form->get('save_and_add')->isClicked() && $form->isValid()) {
+        if ($form->isSubmitted("published") && $form->isValid()) {
             $state = $stateRepository->find(2);
             $o->setState($state);
             $entityManager->persist($o);
@@ -69,7 +69,7 @@ class OutingController extends AbstractController
             return $this->redirectToRoute('home');
             }
             
-        if ($form->get('submit')->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted("record") && $form->isValid()) {
             $state = $stateRepository->find(1);
             $o->setState($state);
                 $entityManager->persist($o);

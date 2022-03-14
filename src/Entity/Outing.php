@@ -45,6 +45,7 @@ class Outing
 
     /**
      * @ORM\Column(type="date")
+     * 
      */
     private $registrationDeadLine;
 
