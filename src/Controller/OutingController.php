@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Outing;
 use App\Entity\State;
+use App\Form\CreateOutingType;
 use App\Form\FilterFormType;
 use App\Form\ModifyOutingType;
 use App\Repository\OutingRepository;
@@ -208,6 +209,58 @@ class OutingController extends AbstractController
 
     }
 
+    /**
+     * @Route("/registration/{id}", name="outing_registration")
+     */
+    public function outingRegistration(Outing $outing, EntityManagerInterface $entityManager): Response
+    {
+        $participant = $this->getUser();
+        $datetimeNow = new \DateTime();
+
+        if($outing->getParticipants()->count() < $outing->getMaxRegistrations() && $outing->getRegistrationDeadLine() > $datetimeNow && $outing->getState()->getId() == 2){
+
+            $outing->addParticipant($participant);
+            $participant->addOuting($outing);
+
+            $entityManager->persist($outing);
+            $entityManager->persist($participant);
+            $entityManager->flush();
+            $this->addFlash('success', 'Vous vous êtes inscrit à la sortie : '. $outing->getName());
+            return $this->redirectToRoute('home');
+
+        }else{
+
+            $this->addFlash('success', 'Vous ne pouvez pas vous inscrire à la sortie : '. $outing->getName());
+            return $this->redirectToRoute('home');
+        }
+    }
+
+    /**
+     * @Route("/withdrawn/{id}", name="outing_withdrawn")
+     */
+    public function outingWthdrawn(Outing $outing, EntityManagerInterface $entityManager): Response
+    {
+        $participant = $this->getUser();
+        $datetimeNow = new \DateTime();
+
+        if($outing->getDateTimeStartOuting() > $datetimeNow && $outing->getRegistrationDeadLine() > $datetimeNow && $outing->getState()->getId() == 2){
+
+            $outing->removeParticipant($participant);
+            $participant->removeOuting($outing);
+
+            $entityManager->persist($outing);
+            $entityManager->persist($participant);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Vous vous êtes désisté de la sortie : '. $outing->getName());
+            return $this->redirectToRoute('home');
+
+        }else{
+
+            $this->addFlash('success', 'Vous ne pouvez pas vous désister de la sortie : '. $outing->getName());
+            return $this->redirectToRoute('home');
+        }
+    }
 
 
 
@@ -215,6 +268,5 @@ class OutingController extends AbstractController
 
 
 }/******************************************************/
-
 
 
