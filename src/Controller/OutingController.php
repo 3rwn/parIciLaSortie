@@ -59,7 +59,16 @@ class OutingController extends AbstractController
         $date = $date = new \DateTime();
 
     if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
-       
+        
+        
+        if ($form->isSubmitted("record") && $form->isValid()) {
+            $state = $stateRepository->find(1);
+            $o->setState($state);
+                $entityManager->persist($o);
+                $entityManager->flush();
+                $this->addFlash('success', 'Vous avez modifier la sortie.');
+            return $this->redirectToRoute('home');
+            }
         if ($form->isSubmitted("published") && $form->isValid()) {
             $state = $stateRepository->find(2);
             $o->setState($state);
@@ -69,14 +78,7 @@ class OutingController extends AbstractController
             return $this->redirectToRoute('home');
             }
             
-        if ($form->isSubmitted("record") && $form->isValid()) {
-            $state = $stateRepository->find(1);
-            $o->setState($state);
-                $entityManager->persist($o);
-                $entityManager->flush();
-                $this->addFlash('success', 'Vous avez modifier la sortie.');
-            return $this->redirectToRoute('home');
-            }
+ 
           }
 
           return $this->render('outing/modifyouting.html.twig',
@@ -107,7 +109,7 @@ class OutingController extends AbstractController
     /**
      * @Route("/createouting/", name="outing_create")
      */
-    public function createOuting(Request $req, EntityManagerInterface $entityManager): Response
+    public function createOuting(Request $req, EntityManagerInterface $entityManager, StateRepository $stateRepository): Response
     {
         $o = new Outing(); 
         $form = $this->createForm(CreateOutingType::class, $o);
@@ -115,6 +117,8 @@ class OutingController extends AbstractController
         $form->handleRequest($req);
         $o->setOrganizer($this->getUser());
         $o->addParticipant($this->getUser());
+        $state = $stateRepository->find(1);
+        $o->setState($state);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $date = $date = new \DateTime();
