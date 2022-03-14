@@ -4,7 +4,6 @@ namespace App\Form;
 
 
 use App\Entity\Campus;
-use App\Entity\User;
 use App\Form\Model\FilterHome;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -37,7 +36,7 @@ class FilterFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => \FilterHome::class,
+            'data_class' => FilterHome::class,
         ]);
     }
 }

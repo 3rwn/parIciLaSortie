@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Outing;
-use App\Entity\State;
 use App\Form\CancelOutingType;
 use App\Form\CreateOutingType;
 use App\Form\FilterFormType;
@@ -11,7 +10,6 @@ use App\Form\ModifyOutingType;
 use App\Repository\OutingRepository;
 use App\Repository\StateRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
