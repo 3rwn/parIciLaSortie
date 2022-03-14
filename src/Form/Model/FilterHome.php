@@ -1,7 +1,5 @@
 <?php
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 class FilterHome
 
@@ -78,7 +76,6 @@ class FilterHome
     }
 
 
-
     /**
      * @param mixed $campus
      */
@@ -86,7 +83,6 @@ class FilterHome
     {
         $this->campus = $campus;
     }
-
 
 
     /**

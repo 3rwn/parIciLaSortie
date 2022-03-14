@@ -35,6 +35,7 @@ security:
         # following line to always enable it.
         # always_remember_me: true
         signature_properties: ['password', 'updatedAt']
+
 #        token_provider:
 #          service: App\Security\RememberMe\CustomTokenProvider
 

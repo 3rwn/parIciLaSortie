@@ -57,11 +57,11 @@ class OutingRepository extends ServiceEntityRepository
     {
         $outings = null;
 //        $criteria['isOrganizer']
-        if ($criteria['isOrganizer']){
+        if ($criteria->getIsOrganizer()){
             $outings =  $this->createQueryBuilder('o')
                 ->Where('o.campus = :campus')
                 ->andWhere('o.organizer = :user')
-                ->setParameters(['campus'=> $criteria['campus']->getCampus(),'user' => $user])
+                ->setParameters(['campus'=> $criteria->getCampus(),'user' => $user])
                 ->getQuery()
                 ->getResult();
         }

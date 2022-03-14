@@ -191,7 +191,7 @@ class OutingController extends AbstractController
 
         if ($form->isSubmitted()) {
             $criteria=$form->getData();
-//          dd($criteria);
+         // dd($criteria->getCampus());
             $outings = $outingRepository->findByFilterOuting($criteria,$user);
             return $this->render('outing/home.html.twig', [
                 'outings'=> $outings,
