@@ -42,11 +42,13 @@ class CreateOutingType extends AbstractType
               ])
             ->add('campus', null, ['choice_label' => 'name'])
             ->add('enregistrer', SubmitType::class,[
-                'label' => 'Enregistrer'
+                'label' => 'Enregistrer',
+                'value'=>1
               ])
               
               ->add('save_and_add', SubmitType::class,[
-                  'label' => 'Publier la sortie'
+                  'label' => 'Publier la sortie',
+                  'value'=>2
               ])
         ;
     }

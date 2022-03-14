@@ -14,5 +14,27 @@
         <h1> Annuler une sortie </h1>
     </div>
     <br>
+    <div class="container text-white text-center">
+    <p>
+        Nom de la sortie : {{outing.name}}
+    </p>
+    <p>
+        Date et heure de la sortie : {{ outing.dateTimeStartOuting  | date('d/m/Y h:m:s')}}
+    </p>
+    <p>
+        Campus : {{outing.campus.name}}
+    </p>
+    <p>
+        Lieu : {{ outing.location.name}} {{ outing.location.address }}
+    </p>
+    <div class="row">
+        <div class="col-mb-6 text-white">
+            {{ form_start (form)}}
+            {{ form_widget (form)}}
+            {{ form_end (form)}}
+
+        </div>
+    </div>
+    </div>
 
 {% endblock %}

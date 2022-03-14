@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Outing;
 use App\Entity\State;
+use App\Form\CancelOutingType;
 use App\Form\CreateOutingType;
 use App\Form\FilterFormType;
 use App\Form\ModifyOutingType;
@@ -123,7 +124,7 @@ class OutingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $date = $date = new \DateTime();
             if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
-                
+
                 $entityManager->persist($o);
                 $entityManager->flush();
                 $this->addFlash('success', 'Vous avez créer une sortie.');
@@ -267,7 +268,34 @@ class OutingController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/cancelouting/{id}", name="outing_cancel")
+     */
+    public function cancelOuting(Outing $outing, EntityManagerInterface $entityManager, Request $request, StateRepository $stateRepository): Response
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(CancelOutingType::class);
+        $form->handleRequest($request);
 
+        if ($outing->getOrganizer()->getId() == $user->getId()) {
+            if($form->isSubmitted()){
+                if($outing->getState()->getId() < 4)
+                $reason = $form->get('reason')->getData();
+                $outing->setDescription($outing->getDescription() . "     Motif de l'annulation : " . $reason);
+                $state = $stateRepository->find(6);
+                $outing->setState($state);
+                $entityManager->persist($outing);
+                $entityManager->flush();
+                $this->addFlash('success', 'Vous avez annulé la sortie : ' . $outing->getName());
+                return $this->redirectToRoute('home');
+
+            }
+        } else {
+            $this->addFlash('success', 'Vous ne pouvez pas annuler la sortie : ' . $outing->getName());
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('outing/CancelOuting.html.twig',['outing'=>$outing, 'form'=>$form->createView()]);
+    }
 
 
 
