@@ -192,7 +192,7 @@ class OutingController extends AbstractController
         $organizer = $this->getUser();
         $outings = null;
 
-        $actions = ['Afficher', 'S\'inscrire'];
+        $actions = ['Afficher' => 'outing_detail', 'S\'inscrire' => 'outing_registration', 'Annuler' => 'outing_cancel', 'Se désister'=>'outing_withdrawn', 'Modifier'=>'outing_update'];
 
         if ($form->isSubmitted()) {
             $criteria=$form->getData();

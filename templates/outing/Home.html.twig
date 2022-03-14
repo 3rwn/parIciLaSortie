@@ -21,19 +21,19 @@
     <div class="row text-white">
         <div class="col-md-6">
             {{ form_start(formulaire) }}
-            {{ form_row(formulaire.campus)}}
-            {{ form_row(formulaire.outingNameLike)}}
-            {{ form_row(formulaire.startingDate)}}
-            {{ form_row(formulaire.endingDate)}}
+            {{ form_row(formulaire.campus) }}
+            {{ form_row(formulaire.outingNameLike) }}
+            {{ form_row(formulaire.startingDate) }}
+            {{ form_row(formulaire.endingDate) }}
         </div>
         <div class="col-md-6">
             <br>
             <br>
             <br>
-            {{ form_row(formulaire.isOrganizer)}}
-            {{ form_row(formulaire.isRegister)}}
-            {{ form_row(formulaire.isNotRegister)}}
-            {{ form_row(formulaire.pastOutings)}}
+            {{ form_row(formulaire.isOrganizer) }}
+            {{ form_row(formulaire.isRegister) }}
+            {{ form_row(formulaire.isNotRegister) }}
+            {{ form_row(formulaire.pastOutings) }}
             {{ form_end(formulaire) }}
         </div>
     </div>
@@ -56,9 +56,9 @@
             {#        {% set nbInscrit = outing.participants.size() %} #}
             <tr>
                 {% if outing.organizer.id == organizer.id and outing.state.id == '1' %}
-                <td><a href="{{ path('outing_update',{id:outing.id}) }}">{{ outing.name }}</a></td>
+                    <td><a href="{{ path('outing_update',{id:outing.id}) }}">{{ outing.name }}</a></td>
                 {% else %}
-                <td><a href="{{ path('outing_detail',{id:outing.id}) }}">{{ outing.name }}</a></td>
+                    <td><a href="{{ path('outing_detail',{id:outing.id}) }}">{{ outing.name }}</a></td>
                 {% endif %}
                 <td>{{ outing.dateTimeStartOuting | date('d/m/Y h:m:s') }}</td>
                 <td>{{ outing.registrationDeadline | date('d/m/Y') }}</td>
@@ -79,8 +79,8 @@
                 {% endif %}
                 <td><a href="{{ path('show_participant',{id:outing.organizer.id }) }}">{{ outing.organizer.pseudo }}</a>
                 </td>
-                <td>{% for action in actions %}
-                    <a href="#">{{ action }}</a>
+                <td>{% for key, value in actions %}
+                        <a href="{{ path( value ,{id:outing.id}) }}">{{ key }}</a>
                     {% endfor %}
                 </td>
             </tr>
@@ -88,7 +88,7 @@
             {% endfor %}
         </table>
     </div>
-    <a href="{{ path('outing_create')}}">
+    <a href="{{ path('outing_create') }}">
         <button class="btn btn-success" type="submit" name="outingCreate">Créer une sortie</button>
     </a>
     <br>

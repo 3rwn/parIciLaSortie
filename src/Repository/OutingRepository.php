@@ -48,25 +48,49 @@ class OutingRepository extends ServiceEntityRepository
     }
 
 
-
     /**
-      * @return Outing[] Returns an array of Outing objects
+     * @return Outing[] Returns an array of Outing objects
      */
 
     public function findByFilterOuting($criteria, $user)
     {
-        $outings = null;
-//        $criteria['isOrganizer']
-        if ($criteria->getIsOrganizer()){
-            $outings =  $this->createQueryBuilder('o')
-                ->Where('o.campus = :campus')
-                ->andWhere('o.organizer = :user')
-                ->setParameters(['campus'=> $criteria->getCampus(),'user' => $user])
-                ->getQuery()
-                ->getResult();
+
+        $qb = $this->createQueryBuilder('o');
+
+        if ($criteria->getCampus()) {
+            $qb->andWhere('o.campus = :campus')
+                ->setParameter('campus', $criteria->getCampus());
         }
-        return $outings
-        ;
+        if ($criteria->getOutingNameLike()) {
+            $qb->andWhere('o.name LIKE :searchBar')
+                ->setParameter('searchBar', '%' . $criteria->getOutingNameLike() . '%');
+        }
+        if ($criteria->getStartingDate()) {
+            $qb->andWhere('o.dateTimeStartOuting >= :startingDate')
+                ->setParameter('startingDate', $criteria->getStartingDate());
+        }
+        if ($criteria->getEndingDate()) {
+            $qb->andWhere('o.dateTimeStartOuting <= :endingDate')
+                ->setParameter('endingDate', $criteria->getEndingDate());
+        }
+        if ($criteria->getIsOrganizer()) {
+            $qb->andWhere('o.organizer = :user')
+                ->setParameter('user', $user);
+        }
+        if ($criteria->getIsRegister()) {
+            $qb->andWhere(':user MEMBER OF o.participants')
+                ->setParameter('user', $user);
+        }
+        if ($criteria->getIsNotRegister()) {
+            $qb->andWhere(':user NOT MEMBER OF o.participants')
+                ->setParameter('user', $user);
+        }
+        if ($criteria->getPastOutings()) {
+            $qb->andWhere('o.dateTimeStartOuting < :date')
+                ->setParameter('date', new \DateTime("now"));
+        }
+        return $qb->getQuery()->getResult();
+
     }
 
 
