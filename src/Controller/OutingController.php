@@ -60,7 +60,7 @@ class OutingController extends AbstractController
 
     if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
        
-        if ($form->get('save_and_add')->isSubmitted() && $form->isValid()) {
+        if ($form->get('save_and_add')->isClicked() && $form->isValid()) {
             $state = $stateRepository->find(2);
             $o->setState($state);
             $entityManager->persist($o);
@@ -170,7 +170,7 @@ class OutingController extends AbstractController
 
 
 
-    /******************************************************/
+     /******************************************************/
 
 
     // Methode permettant d'afficher les sorties avec un filtre
