@@ -50,10 +50,11 @@ class CreateOutingType extends AbstractType
                 'label'=> 'Durée de la sortie'
             ])
             ->add('registrationDeadLine',DateType::class,[
-                'label' => 'Date fin d inscription',
+                'label' => 'Date de fin d\'inscription',
                 'widget' => 'single_text'
                 ])
-            ->add('maxRegistrations')
+            ->add('maxRegistrations', null, ['label'=> 'Nombre de places']
+            )
             ->add('description', TextareaType::class)
             ->add('campus', null, ['label'=> 'Campus', 'choice_label' => 'name'])
             ->add('location', EntityType::class,[
@@ -65,9 +66,10 @@ class CreateOutingType extends AbstractType
             ->add('enregistrer', SubmitType::class,[
                 'label' => 'Enregistrer'
               ])
-              ->add('save_and_add', SubmitType::class,[
+              ->add('saveAndAdd', SubmitType::class,[
                   'label' => 'Publier la sortie'
               ])
+
 
 //            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
 //            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))

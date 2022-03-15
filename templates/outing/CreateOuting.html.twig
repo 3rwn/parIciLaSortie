@@ -1,59 +1,98 @@
 {% extends 'base.html.twig' %}
 {% block title %}
     Home
-{%  endblock %}
+{% endblock %}
 {% block body %}
-    <div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
+    <div class="container h-25">
+
     </div>
     <br>
     <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
         <h1> Créer une sortie </h1>
-        </div>
+    </div>
     <br>
+
+    <div class="container text-white">
     <div class="row">
-<div class="col-mb-6 text-white">
-        {{ form_start (formulaire)}}
-        <div class="container mb-5">
-        {{ form_widget (formulaire)}}
-        <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
-        {{ form_end (formulaire)}}
+    <div class="col">
+        {{ form_start (formulaire) }}
+        <div class="row">
+            <div class="col">{{ form_row(formulaire.name) }}</div>
+            <div class="col">{{ form_row(formulaire.campus) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(formulaire.dateTimeStartOuting) }}</div>
+            <div class="col">{{ form_row(formulaire.duration) }}</div>
+        </div>
+        <div class="row">
+            <div class="col">{{ form_row(formulaire.registrationDeadLine) }}</div>
+            <div class="col">{{ form_row(formulaire.maxRegistrations) }}</div>
         </div>
     </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-mb-6 text-white">
+
+                <div class="col-mb-6 text-white">
+
+                    <div class="col">
+                    </div>
+
+                </div>
+
+                {{ form_row(formulaire.description) }}
+
+            </div>
+
+            <div class="row">
+                <div class="col-6">{{ form_row(formulaire.location) }}</div>
+                <div class="col-2">{{ form_row(formulaire.enregistrer) }}</div>
+                <div class="col-2">{{ form_row(formulaire.saveAndAdd) }}</div>
+                <a  href="{{ path('home') }}" class="btn btn-warning col-2">Annuler</a>
+            </div>
+
+
+            <div class="container mb-5">
+{#                {{ form_widget (formulaire) }}#}
+
+{#                {{ form_row(formulaire.enregistrer) }}{{ form_row(formulaire.saveAndAdd) }}#}
+{#               <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>#}
+                {{ form_end (formulaire) }}
+            </div>
+        </div>
     </div>
-{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
-{#    <script>#}
-{#        $('#app_outing_location_city').change(function () {#}
-{#            var citySelector = $(this);#}
-{#            // document.write("<h1>citySelector</h1>");#}
-{#            $.ajax({#}
-{#                url: "{{ path('get_location') }}",#}
-{#                type: "GET",#}
-{#                dataType: "JSON",#}
-{#                data: {#}
-{#                    cityId: citySelector.val()#}
-{#                },#}
-{#                success: function (locations) {#}
-{#                    var locationSelect = $("#app_outing_location");#}
+    {#    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> #}
+    {#    <script> #}
+    {#        $('#app_outing_location_city').change(function () { #}
+    {#            var citySelector = $(this); #}
+    {#            // document.write("<h1>citySelector</h1>"); #}
+    {#            $.ajax({ #}
+    {#                url: "{{ path('get_location') }}", #}
+    {#                type: "GET", #}
+    {#                dataType: "JSON", #}
+    {#                data: { #}
+    {#                    cityId: citySelector.val() #}
+    {#                }, #}
+    {#                success: function (locations) { #}
+    {#                    var locationSelect = $("#app_outing_location"); #}
 
-{#                    // Remove current options#}
-{#                    locationSelect.html('');#}
+    {#                    // Remove current options #}
+    {#                    locationSelect.html(''); #}
 
-{#                    // Empty value ...#}
-{#                    locationSelect.append('<option value> Selectionnez une adresse de ' + citySelector.find("option:selected").text() + ' ...</option>');#}
+    {#                    // Empty value ... #}
+    {#                    locationSelect.append('<option value> Selectionnez une adresse de ' + citySelector.find("option:selected").text() + ' ...</option>'); #}
 
 
-{#                    $.each(locations, function (key, location) {#}
-{#                        locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>');#}
-{#                    });#}
-{#                },#}
-{#                error: function (err) {#}
-{#                    alert("An error ocurred while loading data ...");#}
-{#                }#}
-{#            });#}
-{#        });#}
-{#    </script>#}
+    {#                    $.each(locations, function (key, location) { #}
+    {#                        locationSelect.append('<option value="' + location.id + '">' + location.name + '</option>'); #}
+    {#                    }); #}
+    {#                }, #}
+    {#                error: function (err) { #}
+    {#                    alert("An error ocurred while loading data ..."); #}
+    {#                } #}
+    {#            }); #}
+    {#        }); #}
+    {#    </script> #}
 {% endblock %}

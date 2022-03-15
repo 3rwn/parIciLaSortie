@@ -54,10 +54,12 @@
             {#                    Longitude : {{ outing.location.longitude }} #}
             {#                </p> #}
             <div class="col text-white">
-                Liste de participants inscrits
+                Liste des participants inscrits :
+                {% if outing.participants.count() == 0 %}
+                Aucun
+                {% else %}
                 <table class="table table-wrapper-scroll-y text-white">
                     <thead>
-
                     <tr>
                         <th>Pseudo</th>
                         <th>Nom</th>
@@ -68,16 +70,15 @@
                     {% for p in outing.participants %}
                         <tr>
                             <td>
-                                <a href="{{ path('show_participant',{id:p.id }) }}">{{ p.pseudo }}
+                                <a style="text-decoration: none" href="{{ path('show_participant',{id:p.id }) }}">{{ p.pseudo }}
                                 </a></td>
-
                             <td>{{ p.name }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
-
                 </table>
             </div>
+            {% endif %}
         </div>
     </div>
 
