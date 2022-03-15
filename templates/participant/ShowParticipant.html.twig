@@ -19,13 +19,13 @@
     <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
         <div class="row"></div>
         <div class="offset-1"></div>
-        <div class="col">
+        <div class="col h2">
             {% if participant.profilePictureFileName %}
-            <img src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}" width="150px">
+                <img src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}" width="150px">
             {% else %}
-            <img src="https://previews.123rf.com/images/diddleman/diddleman1204/diddleman120400002/13058158-no-user-profile-picture-hand-drawn-.jpg?fj=1"
-                 width="150px"></img>
-                {% endif %}
+                <img src="https://previews.123rf.com/images/diddleman/diddleman1204/diddleman120400002/13058158-no-user-profile-picture-hand-drawn-.jpg?fj=1"
+                     width="270px" style="border-style: groove" alt="profilePicture">
+            {% endif %}
 
         </div>
         <div class="offset-1"></div>

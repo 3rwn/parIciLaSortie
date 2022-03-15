@@ -2,96 +2,84 @@
 
 {% block title %}
     ShowOuting
-{%  endblock %}
+{% endblock %}
 
 {% block body %}
-    <div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
+    <div class="container h-25">
+
     </div>
-<div class="container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
-<h1> {{ outing.name}} </h1>
-</div>
-<br>
-{# Première DIV qui permet d'afficher les informations de la sortie #}
-<div class="container text-white">
-  <div class="row">
-    <div class="col">
-    <p>
-    Nom de la sortie : {{ outing.name}}
-    </p>
-    <p>
-Date et heure de la sortie : {{ outing.dateTimeStartOuting  | date('d/m/Y h:m:s')}}
-</p>
-<p>
-Date limite d'inscription : {{ outing.registrationDeadLine  | date('d/m/Y')}}
-</p>
-<p>
-Nombre de places : {{ outing.maxRegistrations}}
-</p><p>
-Durée : {{ outing.duration}} minutes
-</p>
-<p>
-Description et infos : {{ outing.description}}
-</p>
+    <br>
+    <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
+        <h1> {{ outing.name }} </h1>
     </div>
-    <div class="col">
-     <p>
-Campus : {{ outing.campus.name}}
-</p>
-<p>
-Lieu de la sortie : {{ outing.location.name}}
-</p>
-<p>
-Rue : {{ outing.location.address}}
-</p>
-<p>
-Code postal : {{ outing.location.city.postalcode}}
-</p>
-<p>
-Ville : {{ outing.location.city.name}}
-</p>
-<p>
-Latitude  : {{ outing.location.latitude}} 
-</p>
-<p>
-Longitude : {{ outing.location.longitude}}
-</p>
-</div> 
-</div>
-</div>
+    <br>
+    {# Première DIV qui permet d'afficher les informations de la sortie #}
+    <div class="container text-white">
+        <div class="row">
+            <div class="col">
+                <p>Sortie {{ outing.name }}<br>
+                    le {{ outing.dateTimeStartOuting  | date('d/m/Y') }}
+                    à {{ outing.dateTimeStartOuting  | date('h:m:s') }}
+                </p>
+                <p>
+                    Date limite d'inscription : {{ outing.registrationDeadLine  | date('d/m/Y') }}
+                </p>
+                <p>
+                    Nombre de places : {{ outing.maxRegistrations }}
+                </p>
+                <p>
+                    Durée : {{ outing.duration }} minutes
+                </p>
+                <p>
+                    Campus : {{ outing.campus.name }}
+                </p>
+                <p>
+                    Lieu de la sortie <br>
+                    {{ outing.location.name }}
+                    {{ outing.location.address }}
+                    {{ outing.location.city.postalcode }}
+                    {{ outing.location.city.name }}
+                </p>
 
-<br>
-<br>
+                <p>
+                    Description et infos : {{ outing.description }}
+                </p>
+            </div>
 
 
-{# Deuxième DIV qui permet d'afficher les participants inscrits #}
-<div class="col-4 text-white">
-    Liste de participants inscrits
-<table class="table table-wrapper-scroll-y text-white">
-    <thead>
-   <tbody>
-   <tr>
-            <th>Pseudo</th>
-            <th>Nom</th>
-   </tr>
-   {# outing.participants permet de récupérer les participants inscrits dans la sortie séléctionné #}
-  {% for p in outing.participants %}
-   <tr>
-        <td>
-        <a href="{{ path('show_participant',{id:p.id })}}">{{ p.pseudo}}
-                </a></td> 
+            {#                <p> #}
+            {#                    Latitude : {{ outing.location.latitude }} #}
+            {#                </p> #}
+            {#                <p> #}
+            {#                    Longitude : {{ outing.location.longitude }} #}
+            {#                </p> #}
+            <div class="col text-white">
+                Liste de participants inscrits
+                <table class="table table-wrapper-scroll-y text-white">
+                    <thead>
 
-        <td>{{ p.name }}</td>
-   </tr>
-{% endfor %}
-</tbody>
-</thead>
-</table>
-</div>
-</div>
+                    <tr>
+                        <th>Pseudo</th>
+                        <th>Nom</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {# outing.participants permet de récupérer les participants inscrits dans la sortie séléctionné #}
+                    {% for p in outing.participants %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('show_participant',{id:p.id }) }}">{{ p.pseudo }}
+                                </a></td>
+
+                            <td>{{ p.name }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
 
 
 {% endblock %}

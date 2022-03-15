@@ -3,17 +3,50 @@
 {% block titre %}Mon Profil{% endblock %}
 
 {% block body %}
-    <div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="mt-4">
-        {{ form_start (formulaire)}}
-        {{ form_widget (formulaire)}}
-        <button class="btn btn-primary" type="submit" name="update">Modifier</button>
-        {{ form_end (formulaire)}}
-            <img src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}">
+    <div class="container h-25">
+
+    </div>
+    <br>
+    <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
+        <h1> Mon profil </h1>
+    </div>
+    <div class="container">
+        <div class="row ">
+            <div class="col ms-5">
+                <img width="350px" style="border-style: groove" alt="profilePicture"
+                     src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}">
+                <div class="col-7">{{ form_row(formulaire.profilePictureFileName) }}</div>
+            </div>
+            <div class="col text-white">
+                {{ form_start (formulaire) }}
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formulaire.pseudo) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formulaire.campus) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">{{ form_row(formulaire.firstName) }}</div>
+                    <div class="col">{{ form_row(formulaire.name) }}</div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        {{ form_row(formulaire.phoneNumber) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(formulaire.email) }}
+                    </div>
+                </div>
+
+
+                {{ form_widget (formulaire) }}
+                <button class="btn btn-secondary" type="submit" name="update">Modifier</button>
+                {{ form_end (formulaire) }}
+            </div>
         </div>
     </div>
+
 {% endblock %}
