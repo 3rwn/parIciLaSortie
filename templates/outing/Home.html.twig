@@ -96,7 +96,7 @@
                     {% else %}
                         {% if outing.state.id == 1 %}
                             <a href="{{ path( 'outing_update' ,{id:outing.id}) }}">Modifier</a>
-                            <a href="{{ path( 'outing_update' ,{id:outing.id}) }}">Publier</a>
+                            <a href="{{ path( 'outing_state_update' ,{id:outing.id}) }}">Publier</a>
 
                         {% elseif outing.state.id == 2 %}
                             <a href="{{ path( 'outing_detail' ,{id:outing.id}) }}">Afficher</a>

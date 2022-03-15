@@ -65,12 +65,12 @@ class OutingController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($form->getClickedButton() && 'save_and_add' === $form->getClickedButton()->getName()) {
+
                     $state = $stateRepository->find(2);
                     $o->setState($state);
                     $entityManager->persist($o);
                     $entityManager->flush();
                     $this->addFlash('success', 'Vous avez publier votre sortie.');
-
                     return $this->redirectToRoute('home');
 
                 }
@@ -90,6 +90,22 @@ class OutingController extends AbstractController
             }
         }
     }
+
+    /**
+     * @Route("/modifstateyouting/{id}", name="outing_state_update")
+     */
+    public function updateStateOuting(Outing $outing,StateRepository $stateRepository, Request $req, EntityManagerInterface $entityManager): Response
+    {
+        $state = $stateRepository->find(2);
+        $outing->setState($state);
+        $entityManager->persist($outing);
+        $entityManager->flush();
+        $this->addFlash('success', 'Vous avez publier votre sortie.');
+        return $this->redirectToRoute('home');
+    }
+
+
+
 
     //Méthode permettant de supprimer une sortie par son id et de la supprimer dans la BDD
     //Méthode servant dans la page ModifyOuting.html.twig
