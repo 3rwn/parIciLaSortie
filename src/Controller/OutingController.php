@@ -7,6 +7,7 @@ use App\Form\CancelOutingType;
 use App\Form\CreateOutingType;
 use App\Form\FilterFormType;
 use App\Form\ModifyOutingType;
+use App\Repository\LocationRepository;
 use App\Repository\OutingRepository;
 use App\Repository\StateRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -136,6 +137,36 @@ class OutingController extends AbstractController
           return $this->render('outing/createouting.html.twig',
            [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
       }
+
+//    /**
+//     * @param Request $request
+//     * @return JsonResponse
+//     * @Route("/getLocation/", name="get_location", methods={"GET"})
+//     */
+//    public function listenLocationOfCity(Request $request, EntityManagerInterface $entityManager, LocationRepository $locationRepository)
+//    {
+//
+//        $locations = $locationRepository->createQueryBuilder("q")
+//            ->where("q.city = :cityId")
+//            ->setParameter("cityId", $request->query->get("cityId"))
+//            ->getQuery()
+//            ->getResult();
+//
+//        // Serialize into an array the data that we need, in this case only name and id
+//        // Note: you can use a serializer as well, for explanation purposes, we'll do it manually
+//        $responseArray = array();
+//        foreach($locations as $location){
+//            $responseArray[] = array(
+//                "id" => $location->getId(),
+//                "name" => $location->getName()
+//            );
+//        }
+//
+//        return new JsonResponse($responseArray);
+//
+//        // e.g
+//        // [{"id":"3","name":"Treasure Island"},{"id":"4","name":"Presidio of San Francisco"}]
+//    }
 
       /******************************************************/
 
