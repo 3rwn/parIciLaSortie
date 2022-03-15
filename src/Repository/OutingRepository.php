@@ -5,10 +5,13 @@ namespace App\Repository;
 use App\Entity\Outing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Void_;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use function Symfony\Component\String\s;
 
@@ -94,6 +97,32 @@ class OutingRepository extends ServiceEntityRepository
         }
         return $qb->getQuery()->getResult();
 
+    }
+
+    public function updatestatebydatetime(EntityManagerInterface $entityManager, OutingRepository $outingRepository, StateRepository $stateRepository): Void
+    {
+
+        $now = new \DateTime('now');
+
+        $outings = $outingRepository->findAll();
+        foreach ($outings as $outing){
+            if( $outing->getRegistrationDeadLine() < $now && $outing->getDateTimeStartOuting() > $now){
+                $outing->setState($stateRepository->find(3));
+            }
+            if($outing->getDateTimeStartOuting() < $now && $outing->getDateTimeStartOuting()->add(new \DateInterval('P1D')) > $now){
+                $outing->setState($stateRepository->find(4));
+            }
+
+            if($outing->getDateTimeStartOuting() < $now &&  $outing->getState()->getId() == 4){
+                $outing->setState($stateRepository->find(5));
+            }
+
+            if($outing->getDateTimeStartOuting()->add(new \DateInterval('P1M')) < $now){
+                $outing->setState($stateRepository->find(7));
+            }
+            $entityManager->persist($outing);
+            $entityManager->flush();
+        }
     }
 
 

@@ -5,5 +5,7 @@
 {% block body %}
 
     <h1>Admin Outing</h1>
-
+    {% for outing in outings %}
+    <p>{{ outing.name }} {{ outing.state.wording }}</p>
+    {% endfor %}
 {% endblock %}

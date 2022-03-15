@@ -234,8 +234,9 @@ class OutingController extends AbstractController
     /**
      * @Route("/home/", name="home")
      */
-    public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager, Security $security): Response
+    public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager, Security $security, StateRepository $stateRepository): Response
     {
+        $outingRepository->updatestatebydatetime($entityManager, $outingRepository, $stateRepository);
         $form = $this->createForm(FilterFormType::class);
         $form->handleRequest($req);
         $user = $security->getUser();
@@ -348,6 +349,33 @@ class OutingController extends AbstractController
         return $this->render('outing/CancelOuting.html.twig',['outing'=>$outing, 'form'=>$form->createView()]);
     }
 
+
+//    public function updatestatebydatetime(EntityManagerInterface $entityManager, OutingRepository $outingRepository, StateRepository $stateRepository): Response
+//    {
+//
+//        $now = new \DateTime('now');
+//
+//        $outings = $outingRepository->findAll();
+//        foreach ($outings as $outing){
+//            if( $outing->getRegistrationDeadLine() < $now && $outing->getDateTimeStartOuting() > $now){
+//                $outing->setState($stateRepository->find(3));
+//            }
+//            if($outing->getDateTimeStartOuting() < $now && $outing->getDateTimeStartOuting()->add(new \DateInterval('P1D')) > $now){
+//                $outing->setState($stateRepository->find(4));
+//            }
+//
+//            if($outing->getDateTimeStartOuting() < $now &&  $outing->getState()->getId() == 4){
+//                $outing->setState($stateRepository->find(5));
+//            }
+//
+//            if($outing->getDateTimeStartOuting()->add(new \DateInterval('P1M')) < $now){
+//            $outing->setState($stateRepository->find(7));
+//            }
+//            $entityManager->persist($outing);
+//            $entityManager->flush();
+//        }
+//        return $this->render('admin/AdminOuting.html.twig',['outings'=>$outings]);
+//    }
 
 
 
