@@ -56,6 +56,9 @@ class OutingRepository extends ServiceEntityRepository
     {
 
         $qb = $this->createQueryBuilder('o');
+//            ->innerJoin('o.state', 'p')
+//            ->where('c.username = :username')
+//            ->andWhere('p.phone = :phone');
 
         if ($criteria->getCampus()) {
             $qb->andWhere('o.campus = :campus')

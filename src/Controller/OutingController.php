@@ -16,7 +16,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
+
+
 class OutingController extends AbstractController
+
 {
     /**
      * @Route("/home", name="home")
@@ -186,8 +189,8 @@ class OutingController extends AbstractController
         $form = $this->createForm(FilterFormType::class);
         $form->handleRequest($req);
         $user = $security->getUser();
-        $criteria = ['campus' => '1', 'organizer' => true];
-        $organizer = $this->getUser();
+        //$criteria = ['campus' => '1', 'organizer' => true];
+        //$organizer = $this->getUser();
         $outings = null;
 
         $actions = ['Afficher' => 'outing_detail', 'S\'inscrire' => 'outing_registration', 'Annuler' => 'outing_cancel', 'Se désister'=>'outing_withdrawn', 'Modifier'=>'outing_update'];
@@ -198,7 +201,7 @@ class OutingController extends AbstractController
             $outings = $outingRepository->findByFilterOuting($criteria,$user);
             return $this->render('outing/home.html.twig', [
                 'outings'=> $outings,
-                'organizer' => $organizer,
+                'user' => $user,
                 'actions' => $actions,
                 'formulaire'=>$form->createView()
             ]);
@@ -206,7 +209,7 @@ class OutingController extends AbstractController
         }
         return $this->render('outing/home.html.twig', [
             'outings'=> $outings,
-            'organizer' => $organizer,
+            'user' => $user,
             'actions' => $actions,
             'formulaire'=>$form->createView()
         ]);

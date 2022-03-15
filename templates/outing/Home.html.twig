@@ -55,7 +55,7 @@
             {% for outing in outings %}
             {#        {% set nbInscrit = outing.participants.size() %} #}
             <tr>
-                {% if outing.organizer.id == organizer.id and outing.state.id == '1' %}
+                {% if outing.organizer.id == user.id and outing.state.id == '1' %}
                     <td><a href="{{ path('outing_update',{id:outing.id}) }}">{{ outing.name }}</a></td>
                 {% else %}
                     <td><a href="{{ path('outing_detail',{id:outing.id}) }}">{{ outing.name }}</a></td>
@@ -67,7 +67,7 @@
                 {% set break = false %}
                 {% for participant in outing.participants %}
                     {% if not break %}
-                        {% if participant.id == organizer.id %}
+                        {% if participant.id == user.id %}
                             {% set break = true %}
                         {% endif %}
                     {% endif %}
@@ -80,6 +80,9 @@
                 <td><a href="{{ path('show_participant',{id:outing.organizer.id }) }}">{{ outing.organizer.pseudo }}</a>
                 </td>
                 <td>{% for key, value in actions %}
+{#                    {% if outing.user.id == user.id %}#}
+{#                        {% switch outing.state.wording == '' %}#}
+{#                        {% case "1" %}#}
                         <a href="{{ path( value ,{id:outing.id}) }}">{{ key }}</a>
                     {% endfor %}
                 </td>
