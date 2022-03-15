@@ -87,8 +87,6 @@ Longitude : {{ outing.location.longitude}}
         </div>
         <div class="container col-md-6 align-items-center">
          {{ form_widget(formulaire) }}
-         <input id="record" type="submit" name="submit" class="btn btn-primary" value="Enregistrer" />
-         <input id="published" type="submit" name="submit" class="btn btn-success" value="Publier" />
         <a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
         <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
         {{ form_end(formulaire) }}

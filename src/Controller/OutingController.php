@@ -61,32 +61,35 @@ class OutingController extends AbstractController
         $form->handleRequest($req);
         $date = $date = new \DateTime();
 
-    if($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()  ){
-        
-        
-        if ($form->isSubmitted("record") && $form->isValid()) {
-            $state = $stateRepository->find(1);
-            $o->setState($state);
-                $entityManager->persist($o);
-                $entityManager->flush();
-                $this->addFlash('success', 'Vous avez modifier la sortie.');
-            return $this->redirectToRoute('home');
-            }
-        if ($form->isSubmitted("published") && $form->isValid()) {
-            $state = $stateRepository->find(2);
-            $o->setState($state);
-            $entityManager->persist($o);
-            $entityManager->flush();
-            $this->addFlash('success', 'Vous avez publier votre sortie.');
-            return $this->redirectToRoute('home');
-            }
-            
- 
-          }
+        if ($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()) {
 
-          return $this->render('outing/modifyouting.html.twig',
-           [ 'formulaire'=> $form->createView(), 'outing'=> $o]);
-      }
+            if ($form->isSubmitted() && $form->isValid()) {
+                if ($form->getClickedButton() && 'save_and_add' === $form->getClickedButton()->getName()) {
+                    $state = $stateRepository->find(2);
+                    $o->setState($state);
+                    $entityManager->persist($o);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Vous avez publier votre sortie.');
+
+                    return $this->redirectToRoute('home');
+
+                }
+                if ($form->getClickedButton() && 'enregistrer' === $form->getClickedButton()->getName()) {
+                    $state = $stateRepository->find(1);
+                    $o->setState($state);
+                    $entityManager->persist($o);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Vous avez modifier la sortie.');
+
+                    return $this->redirectToRoute('home');
+                }
+            } else {
+
+                return $this->render('outing/modifyouting.html.twig',
+                    ['formulaire' => $form->createView(), 'outing' => $o]);
+            }
+        }
+    }
 
     //Méthode permettant de supprimer une sortie par son id et de la supprimer dans la BDD
     //Méthode servant dans la page ModifyOuting.html.twig

@@ -52,6 +52,12 @@ class ModifyOutingType extends AbstractType
             'choice_label'=>'name',
             'label' => 'Lieu',
           ])
+            ->add('enregistrer', SubmitType::class,[
+                'label' => 'Enregistrer'
+            ])
+            ->add('save_and_add', SubmitType::class,[
+                'label' => 'Publier la sortie'
+            ])
        
         
         ;
