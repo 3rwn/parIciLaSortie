@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use App\Form\ParticipantUpdateType;
 use App\Security\AppParticipantAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -21,6 +22,7 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 class ParticipantController extends AbstractController
 {
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/participant", name="app_participant")
      */
     public function index(): Response
@@ -31,6 +33,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * Fonction permettant d'afficher le profil du User connecté et permettant de modifier le profil
      * @Route("/MyProfile",  name="my_profile")
      */
@@ -121,6 +124,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * Fonction permettant d'afficher n'importe quel participant grâce à son id
      * @Route("/ShowParticipant/{id}", requirements={"id"="\d+"}, name="show_participant")
      */

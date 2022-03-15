@@ -11,6 +11,7 @@ use App\Repository\LocationRepository;
 use App\Repository\OutingRepository;
 use App\Repository\StateRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,15 +20,17 @@ use Symfony\Component\Security\Core\Security;
 
 
 
+
 class OutingController extends AbstractController
 
 {
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/home", name="home")
      */
     public function index(): Response
     {
-        return $this->render('outing/home.html.twig', [
+        return $this->render('/home.html.twig', [
             'controller_name' => 'OutingController',
         ]);
     }
@@ -36,6 +39,7 @@ class OutingController extends AbstractController
     // Methode permettant de récupérer les informations d'une sortie avec son id
     //Methode servant dans la page ShowOuting.html.twig
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/showouting/{id}", name="outing_detail")
      */
     public function detail(Outing $o): Response
@@ -52,6 +56,7 @@ class OutingController extends AbstractController
     //Méthode servant dans la page ModifyOuting.html.twig
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/modifyouting/{id}", name="outing_update")
      */
     public function updateOuting(Outing $o,StateRepository $stateRepository, Request $req, EntityManagerInterface $entityManager): Response
@@ -89,9 +94,12 @@ class OutingController extends AbstractController
                     ['formulaire' => $form->createView(), 'outing' => $o]);
             }
         }
+        return $this->render('outing/modifyouting.html.twig',
+            ['formulaire' => $form->createView(), 'outing' => $o]);
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/modifstateyouting/{id}", name="outing_state_update")
      */
     public function updateStateOuting(Outing $outing,StateRepository $stateRepository, Request $req, EntityManagerInterface $entityManager): Response
@@ -100,7 +108,7 @@ class OutingController extends AbstractController
         $outing->setState($state);
         $entityManager->persist($outing);
         $entityManager->flush();
-        $this->addFlash('success', 'Vous avez publier votre sortie.');
+        $this->addFlash('success', 'Vous avez publier votre sortie : '.$outing->getName());
         return $this->redirectToRoute('home');
     }
 
@@ -111,6 +119,7 @@ class OutingController extends AbstractController
     //Méthode servant dans la page ModifyOuting.html.twig
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/deleteouting/{id}", name="outing_delete")
      */
     public function deleteOuting(Outing $o, EntityManagerInterface $entityManager): Response
@@ -118,7 +127,7 @@ class OutingController extends AbstractController
           
            $entityManager->remove($o);
            $entityManager->flush(); // SAVE execute la requete SQL
-           $this->addFlash('success', 'Vous avez bien supprimer la.');
+           $this->addFlash('success', 'Vous avez bien supprimer la sortie : '.$o->getName());
            //dd($p->getId());
            // rediriger vers home
            return $this->redirectToRoute('home'); 
@@ -129,6 +138,7 @@ class OutingController extends AbstractController
     //Méthode servant dans la page CreateOuting.html.twig
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/createouting/", name="outing_create")
      */
     public function createOuting(Request $req, EntityManagerInterface $entityManager, StateRepository $stateRepository): Response
@@ -232,6 +242,7 @@ class OutingController extends AbstractController
     // Methode permettant d'afficher les sorties avec un filtre
     //Methode servant dans la page home.html.twig
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/home/", name="home")
      */
     public function showOutings(OutingRepository $outingRepository,Request $req, EntityManagerInterface $entityManager, Security $security, StateRepository $stateRepository): Response
@@ -268,6 +279,7 @@ class OutingController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/registration/{id}", name="outing_registration")
      */
     public function outingRegistration(Outing $outing, EntityManagerInterface $entityManager): Response
@@ -294,6 +306,7 @@ class OutingController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/withdrawn/{id}", name="outing_withdrawn")
      */
     public function outingWthdrawn(Outing $outing, EntityManagerInterface $entityManager): Response
@@ -321,6 +334,7 @@ class OutingController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/cancelouting/{id}", name="outing_cancel")
      */
     public function cancelOuting(Outing $outing, EntityManagerInterface $entityManager, Request $request, StateRepository $stateRepository): Response

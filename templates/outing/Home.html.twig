@@ -61,7 +61,7 @@
                 {% else %}
                     <td><a href="{{ path('outing_detail',{id:outing.id}) }}">{{ outing.name }}</a></td>
                 {% endif %}
-                <td>{{ outing.dateTimeStartOuting | date('d/m/Y h:m:s') }}</td>
+                <td>{{ outing.dateTimeStartOuting | date('d/m/Y h:m') }}</td>
                 <td>{{ outing.registrationDeadline | date('d/m/Y') }}</td>
                 <td>{{ outing.participants.count() }}/{{ outing.maxRegistrations }}</td>
                 <td>{{ outing.state.wording }}</td>

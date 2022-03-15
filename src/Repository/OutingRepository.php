@@ -106,10 +106,11 @@ class OutingRepository extends ServiceEntityRepository
 
         $outings = $outingRepository->findAll();
         foreach ($outings as $outing){
+            $outingStart = $outing->getDateTimeStartOuting();
             if( $outing->getRegistrationDeadLine() < $now && $outing->getDateTimeStartOuting() > $now){
                 $outing->setState($stateRepository->find(3));
             }
-            if($outing->getDateTimeStartOuting() < $now && $outing->getDateTimeStartOuting()->add(new \DateInterval('P1D')) > $now){
+            if($outing->getDateTimeStartOuting() < $now && $outingStart->add(new \DateInterval('PT' . $outing->getDuration() . 'M')) > $now){
                 $outing->setState($stateRepository->find(4));
             }
 
@@ -117,7 +118,7 @@ class OutingRepository extends ServiceEntityRepository
                 $outing->setState($stateRepository->find(5));
             }
 
-            if($outing->getDateTimeStartOuting()->add(new \DateInterval('P1M')) < $now){
+            if($outingStart->add(new \DateInterval('P1M')) < $now){
                 $outing->setState($stateRepository->find(7));
             }
             $entityManager->persist($outing);
