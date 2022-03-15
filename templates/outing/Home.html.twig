@@ -52,8 +52,10 @@
             </tr>
             </thead>
             <tbody>
+            {% set inscrit ='' %}
+            {% set NonInscrit ='' %}
             {% for outing in outings %}
-            {#        {% set nbInscrit = outing.participants.size() %} #}
+
             <tr>
                 {% if outing.organizer.id == user.id and outing.state.id == '1' %}
                     <td><a href="{{ path('outing_update',{id:outing.id}) }}">{{ outing.name }}</a></td>
@@ -73,18 +75,38 @@
                     {% endif %}
                 {% endfor %}
                 {% if break %}
-                    <td>inscrit</td>
+                    <td> {% set inscrit = 'inscrit' %} inscrit</td>
                 {% else %}
-                    <td>non inscrit</td>
+                    <td>{% set nonInscrit = 'non inscrit' %} non inscrit</td>
                 {% endif %}
                 <td><a href="{{ path('show_participant',{id:outing.organizer.id }) }}">{{ outing.organizer.pseudo }}</a>
                 </td>
-                <td>{% for key, value in actions %}
-{#                    {% if outing.user.id == user.id %}#}
-{#                        {% switch outing.state.wording == '' %}#}
-{#                        {% case "1" %}#}
-                        <a href="{{ path( value ,{id:outing.id}) }}">{{ key }}</a>
-                    {% endfor %}
+                <td>
+                    {% if outing.organizer.id != user.id %}
+                        {% if outing.state.id != 1 %}
+                            <a href="{{ path( 'outing_detail' ,{id:outing.id}) }}">Afficher</a>
+                        {% endif %}
+                        {% if outing.state.id == 2 %}
+                            {% if inscrit %}
+                                <a href="{{ path( 'outing_withdrawn' ,{id:outing.id}) }}">Se désister</a>
+                            {% else %}
+                                <a href="{{ path( 'outing_registration' ,{id:outing.id}) }}">S'inscrire</a>
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if outing.state.id == 1 %}
+                            <a href="{{ path( 'outing_update' ,{id:outing.id}) }}">Modifier</a>
+                            <a href="{{ path( 'outing_update' ,{id:outing.id}) }}">Publier</a>
+
+                        {% elseif outing.state.id == 2 %}
+                            <a href="{{ path( 'outing_detail' ,{id:outing.id}) }}">Afficher</a>
+                            <a href="{{ path( 'outing_cancel' ,{id:outing.id}) }}">Annuler</a>
+                        {% else %}
+                            <a href="{{ path( 'outing_detail' ,{id:outing.id}) }}">Afficher</a>
+                        {% endif %}
+                    {% endif %}
+
+
                 </td>
             </tr>
             </tbody>

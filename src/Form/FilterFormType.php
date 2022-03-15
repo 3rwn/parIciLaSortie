@@ -25,7 +25,7 @@ class FilterFormType extends AbstractType
                 'required' => false])
             ->add('outingNameLike', TextType::class, ['label' => 'Rechercher dans le nom', 'required' => false])
             ->add('startingDate', DateType::class, ['widget' => 'single_text', 'label' => 'Entre', 'required' => false, 'data' => new \DateTime("now")])
-            ->add('endingDate', DateType::class, ['widget' => 'single_text', 'label' => 'Et', 'required' => false, 'data' => new \DateTime("now + 2 month")])
+            ->add('endingDate', DateType::class, ['widget' => 'single_text', 'label' => 'Et', 'required' => false])
             ->add('isOrganizer', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur·rice', 'required' => false])
             ->add('isRegister', CheckboxType::class, ['label' => 'Sorties où je suis inscrit·e', 'required' => false])
             ->add('isNotRegister', CheckboxType::class, ['label' => 'Sorties où je ne suis pas inscrit·e', 'required' => false])

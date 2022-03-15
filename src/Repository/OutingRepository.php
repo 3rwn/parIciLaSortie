@@ -4,10 +4,13 @@ namespace App\Repository;
 
 use App\Entity\Outing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Security;
+use function Symfony\Component\String\s;
 
 /**
  * @method Outing|null find($id, $lockMode = null, $lockVersion = null)
@@ -54,11 +57,8 @@ class OutingRepository extends ServiceEntityRepository
 
     public function findByFilterOuting($criteria, $user)
     {
-
-        $qb = $this->createQueryBuilder('o');
-//            ->innerJoin('o.state', 'p')
-//            ->where('c.username = :username')
-//            ->andWhere('p.phone = :phone');
+        $qb = $this->createQueryBuilder('o')
+        ->innerJoin('o.state','s');
 
         if ($criteria->getCampus()) {
             $qb->andWhere('o.campus = :campus')
@@ -89,8 +89,8 @@ class OutingRepository extends ServiceEntityRepository
                 ->setParameter('user', $user);
         }
         if ($criteria->getPastOutings()) {
-            $qb->andWhere('o.dateTimeStartOuting < :date')
-                ->setParameter('date', new \DateTime("now"));
+            $qb->andWhere('s.id = :state')
+                ->setParameter('state', 5);
         }
         return $qb->getQuery()->getResult();
 
