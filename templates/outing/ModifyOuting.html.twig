@@ -1,77 +1,17 @@
 {% extends 'base.html.twig' %}
 
-
 {% block titre %}
-Modifier une sortie
+    Modifier une sortie
 {% endblock %}
 
-
-{# {% block body %}
-<div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-    <br>
-</div>
-
-
-<div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
-<div class="row">
-<div class="col-md-6 text-white">
-{{ form_start(formulaire)}}
-{{form(formulaire.name)}}
-
-<p>
-Adresse : {{outing.location.address}}
-</p>
-<p>
-Code postal : {{ outing.location.city.postalcode}}
-</p>
-<p>
-Ville : {{ outing.location.city.name}}
-</p>
-<p>
-Latitude  : {{ outing.location.latitude}} 
-</p>
-<p>
-Longitude : {{ outing.location.longitude}}
-</p>
-</div>
-</div>
-{{ form_widget(formulaire)}}
-<div class="col-md-6 text-white">
-<button class="btn btn-primary" type="submit">Modifier</button>
-<button class="btn btn-success" type="submit">Publier la sortie</button>
-<a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
-<a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
-</div>
-{{ form_rest(formulaire) }}
-{{ form_end(formulaire)}}
-</div>
-
-<div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
-{% endblock %} #}
-
-
 {% block body %}
-<div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
+    <div class="container h-25">
     </div>
     <br>
-</div>
-        <h1 class="text-center">Modifier la sortie</h1>
-        <h1 class="text-center">{{ outing.name}}</h1>
- <div class="container text-white">
+    <div class="mt-5"><h1 class="text-center">Modifier la sortie</h1></div>
+
+{#      <h1 class="text-center">{{ outing.name }}</h1>#}
+    <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
     <div class="row">
     <div class="col">
         {{ form_start (formulaire) }}
@@ -89,7 +29,7 @@ Longitude : {{ outing.location.longitude}}
         </div>
     </div>
 
-     <div class="container">
+    <div class="container">
         <div class="row">
 
             <div class="col-mb-6 text-white">
@@ -108,36 +48,31 @@ Longitude : {{ outing.location.longitude}}
             <div class="row mb-3">
                 <div class="col">{{ form_row(formulaire.location) }}</div>
                 <div class="col">{{ form_row(formulaire.city) }}</div>
-                <div class="col-2"><div class="row"><div class="col"></div>
-                            <a href="{{ path('create_location') }}"><div class="col-10 mx-auto mt-4 btn btn-secondary"><i class="fa-solid fa-plus"></i></div></a></div></div>
+                <div class="col-2">
+                    <div class="row">
+                        <div class="col"></div>
+                        <a href="{{ path('create_location') }}">
+                            <div class="col-10 mx-auto mt-4 btn btn-secondary"><i class="fa-solid fa-plus"></i></div>
+                        </a></div>
+                </div>
 
 
             </div>
 
-                <div class="row">
-                <div class="col-10"></div>
-                <div class="col">{{ form_row(formulaire.enregistrer) }}</div>
-                <div class="col">{{ form_row(formulaire.saveAndAdd) }}</div>
-                <div class="col"><a class="btn btn-primary" href="{{path('outing_delete',{'id':outing.id})}}" >Supprimer</a></div>
+            <div class="row">
+                <div class="col-2 "></div>
+                <div class="col mx-auto ">{{ form_row(formulaire.enregistrer) }}</div>
+                <div class="col mx-auto">{{ form_row(formulaire.saveAndAdd) }}</div>
+                <div class="col mx-auto"><a class="btn btn-primary" href="{{ path('outing_delete',{'id':outing.id}) }}">Supprimer</a>
+                </div>
                 <div class="col"><a class="btn btn-primary" href="{{ path('home') }}">Annuler</a></div>
                 {{ form_end (formulaire) }}
             </div>
 
-
-            <div class="container">
-{#                {{ form_widget (formulaire) }}#}
-
-{#                {{ form_row(formulaire.enregistrer) }}{{ form_row(formulaire.saveAndAdd) }}#}
-{#               <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>#}
-                
-            </div>
         </div>
     </div>
 
-        <div class="container mb-5">
-        <br>
-        <br>
-        <br>
-        <br>
+    <div class="container mb-5">
+
     </div>
-    {% endblock %}
+{% endblock %}

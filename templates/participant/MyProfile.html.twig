@@ -13,7 +13,7 @@
     <div class="container">
         <div class="row ">
             <div class="col ms-5">
-
+                {{ form_start (formulaire) }}
                 {% if participant.profilePictureFileName %}
                     <img width="350px" style="border-style: groove" alt="profilePicture"
                          src="{{ asset('ProfilePictures/' ~ participant.profilePictureFileName) }}">
