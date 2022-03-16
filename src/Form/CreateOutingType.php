@@ -62,12 +62,24 @@ class CreateOutingType extends AbstractType
                 'choice_label'=>'name',
                 'label' => 'Lieu',
               ])
+            ->add('city', EntityType::class, array(
+                'label' => 'Ville',
+                'required' => true,
+                'class'=>City::class,
+                //'data' => $city,
+                'choice_label'=>'name',
+                'mapped'=> false,
+                'placeholder' => 'Selectionnez une ville',
+            ))
+
 
             ->add('enregistrer', SubmitType::class,[
-                'label' => 'Enregistrer'
+                'label' => 'Enregistrer',
+                'attr' => ['class' => 'btn btn-secondary']
               ])
               ->add('saveAndAdd', SubmitType::class,[
-                  'label' => 'Publier la sortie'
+                  'label' => 'Publier',
+                  'attr' => ['class' => 'btn btn-secondary']
               ])
 
 
@@ -82,7 +94,7 @@ class CreateOutingType extends AbstractType
             'label' => 'Ville 2',
             'required' => true,
             'class'=>City::class,
-//           'data' => $city,
+            //'data' => $city,
             'choice_label'=>'name',
             'mapped'=> false,
             'placeholder' => 'Selectionnez une ville',

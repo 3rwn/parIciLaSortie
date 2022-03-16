@@ -46,11 +46,18 @@
 
             </div>
 
+            <div class="row mb-3">
+                <div class="col">{{ form_row(formulaire.location) }}</div>
+                <div class="col">{{ form_row(formulaire.city) }}</div>
+                <div class="col-1 btn btn-secondary">+</div>
+            </div>
+
             <div class="row">
-                <div class="col-6">{{ form_row(formulaire.location) }}</div>
-                <div class="col-2">{{ form_row(formulaire.enregistrer) }}</div>
-                <div class="col-2">{{ form_row(formulaire.saveAndAdd) }}</div>
-                <a  href="{{ path('home') }}" class="btn btn-warning col-2">Annuler</a>
+                <div class="col-7"></div>
+                <div class="col">{{ form_row(formulaire.enregistrer) }}</div>
+                <div class="col">{{ form_row(formulaire.saveAndAdd) }}</div>
+                <div class="col"><a class="btn btn-secondary" href="{{ path('home') }}">Annuler</a></div>
+
             </div>
 
 
