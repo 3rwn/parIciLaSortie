@@ -117,7 +117,7 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
     private $organizer;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ProfilePictureFileName;
 

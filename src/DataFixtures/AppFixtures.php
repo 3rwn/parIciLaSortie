@@ -31,10 +31,12 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->manager = $manager;
-        $this->addParticipants();
+        $this->addState();
+        $this->addCity();
+        $this->addCampus();
         $this->addLocations();
+        $this->addParticipants();
         $this->addOutings();
-
     }
 
     /**
@@ -69,9 +71,6 @@ class AppFixtures extends Fixture
             $this->manager->persist($participant);
         }
         $this->manager->flush();
-
-
-        //$users = $this->manager->getRepository(User::class)->findAll();
     }
 
     /**
@@ -92,9 +91,6 @@ class AppFixtures extends Fixture
             $this->manager->persist($location);
         }
         $this->manager->flush();
-
-
-        //$users = $this->manager->getRepository(User::class)->findAll();
     }
 
     /**
@@ -126,10 +122,56 @@ class AppFixtures extends Fixture
             $this->manager->persist($outing);
         }
         $this->manager->flush();
-
-
-        //$users = $this->manager->getRepository(User::class)->findAll();
     }
 
+    /**
+     * @return void
+     * function en charge de générer des campus dans la base de données
+     */
+    public function addCampus()
+    {
+
+        for ($i = 0; $i < 6; $i++) {
+
+            $campus = new Campus();
+            $campus->setName($this->faker->city);
+
+            $this->manager->persist($campus);
+        }
+        $this->manager->flush();
+    }
+
+    /**
+     * @return void
+     * function en charge de générer des villes dans la base de données
+     */
+    public function addCity()
+    {
+
+        for ($i = 0; $i < 6; $i++) {
+
+            $city = new City();
+            $city->setName($this->faker->city);
+            $city->setPostalcode((00000));
+
+            $this->manager->persist($city);
+        }
+        $this->manager->flush();
+    }
+
+    /**
+     * @return void
+     * function en charge de générer des états dans la base de données
+     */
+    public function addState()
+    {
+        $states = ['Créée','Ouverte','Cloturée','Activité en cours', 'Passée', 'Annulée', 'Historisée'];
+        for ($i = 0; $i < 7; $i++) {
+            $state = new State();
+            $state -> setWording($states[$i]);
+            $this->manager->persist($state);
+        }
+        $this->manager->flush();
+    }
 
 }
