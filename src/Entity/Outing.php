@@ -35,6 +35,10 @@ class Outing
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThan(
+     *      value = "today",
+     *      message = "La date doit être après aujourd'hui"
+     * )
      */
     private $dateTimeStartOuting;
 
@@ -45,7 +49,14 @@ class Outing
 
     /**
      * @ORM\Column(type="date")
-     * 
+    * @Assert\GreaterThanOrEqual(
+     *      value = "today",
+     *      message = "La date doit être après aujourd'hui"
+     * )
+     * @Assert\Expression(
+     *     "this.getRegistrationDeadLine() <= this.getDateTimeStartOuting()",
+     *     message="La date doit être avant la date de la sortie"
+     * ) 
      */
     private $registrationDeadLine;
 
