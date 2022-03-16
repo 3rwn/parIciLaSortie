@@ -40,6 +40,12 @@ class ModifyOutingType extends AbstractType
             ->add('duration', IntegerType::class,[
                 'label' => 'Durée'])
             ->add('description', TextareaType::class)
+            ->add('city', EntityType::class, array(
+                'label' => 'Ville',
+                'required' => true,
+                'class'=>City::class,
+                'choice_label'=>'name',
+                'mapped'=> false,))
             ->add('campus', null, ['choice_label' => 'name'])
             ->add('location', EntityType::class,[
                 'class'=>Location::class,
@@ -47,7 +53,7 @@ class ModifyOutingType extends AbstractType
                 'label' => 'Lieu',])
             ->add('enregistrer', SubmitType::class,[
                 'label' => 'Enregistrer'])
-            ->add('save_and_add', SubmitType::class,[
+            ->add('saveAndAdd', SubmitType::class,[
                 'label' => 'Publier la sortie']);
     }
 

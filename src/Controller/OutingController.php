@@ -53,7 +53,7 @@ class OutingController extends AbstractController
         $date = new \DateTime();
         if ($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()) {
             if ($form->isSubmitted() && $form->isValid()) {
-                if ($form->getClickedButton() && 'save_and_add' === $form->getClickedButton()->getName()) {
+                if ($form->getClickedButton() && 'saveAndAdd' === $form->getClickedButton()->getName()) {
                     $state = $stateRepository->find(2);
                     $o->setState($state);
                     $entityManager->persist($o);

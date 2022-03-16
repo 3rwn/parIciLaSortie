@@ -71,26 +71,69 @@ Longitude : {{ outing.location.longitude}}
 </div>
         <h1 class="text-center">Modifier la sortie</h1>
         <h1 class="text-center">{{ outing.name}}</h1>
-       <div class="container col-md-6 text-center text-white">
-        {{ form_start(formulaire) }}
-        {{ form_row(formulaire.name)}}
-        {{ form_row(formulaire.dateTimeStartOuting)}}
-        {{ form_row(formulaire.registrationDeadLine)}}
-        {{ form_row(formulaire.duration)}} 
-        {{ form_row(formulaire.maxRegistrations)}}
-        {{ form_row(formulaire.description)}}
-        {{ form_row(formulaire.location)}}
-        {# {{ form_row(formulaire.status)}} #}
-        {{ form_row(formulaire.campus)}}
-        {# {{ form_row(activity.organizer)}} #}
-        {# {{ form_row(activity.participant)}} #}
+ <div class="container text-white">
+    <div class="row">
+    <div class="col">
+        {{ form_start (formulaire) }}
+        <div class="row">
+            <div class="col">{{ form_row(formulaire.name) }}</div>
+            <div class="col">{{ form_row(formulaire.campus) }}</div>
         </div>
-        <div class="container col-md-6 align-items-center">
-         {{ form_widget(formulaire) }}
-        <a href="{{path('outing_delete',{'id':outing.id})}}" class="btn btn-danger">Supprimer</a>
-        <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>
-        {{ form_end(formulaire) }}
+        <div class="row">
+            <div class="col">{{ form_row(formulaire.dateTimeStartOuting) }}</div>
+            <div class="col">{{ form_row(formulaire.duration) }}</div>
         </div>
+        <div class="row">
+            <div class="col">{{ form_row(formulaire.registrationDeadLine) }}</div>
+            <div class="col">{{ form_row(formulaire.maxRegistrations) }}</div>
+        </div>
+    </div>
+
+     <div class="container">
+        <div class="row">
+
+            <div class="col-mb-6 text-white">
+
+                <div class="col-mb-6 text-white">
+
+                    <div class="col">
+                    </div>
+
+                </div>
+
+                {{ form_row(formulaire.description) }}
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">{{ form_row(formulaire.location) }}</div>
+                <div class="col">{{ form_row(formulaire.city) }}</div>
+                <div class="col-2"><div class="row"><div class="col"></div>
+                            <a href="{{ path('create_location') }}"><div class="col-10 mx-auto mt-4 btn btn-secondary"><i class="fa-solid fa-plus"></i></div></a></div></div>
+
+
+            </div>
+
+                <div class="row">
+                <div class="col-10"></div>
+                <div class="col">{{ form_row(formulaire.enregistrer) }}</div>
+                <div class="col">{{ form_row(formulaire.saveAndAdd) }}</div>
+                <div class="col"><a class="btn btn-primary" href="{{path('outing_delete',{'id':outing.id})}}" >Supprimer</a></div>
+                <div class="col"><a class="btn btn-primary" href="{{ path('home') }}">Annuler</a></div>
+                {{ form_end (formulaire) }}
+            </div>
+
+
+            <div class="container">
+{#                {{ form_widget (formulaire) }}#}
+
+{#                {{ form_row(formulaire.enregistrer) }}{{ form_row(formulaire.saveAndAdd) }}#}
+{#               <a href="{{ path('home') }}" class="btn btn-warning">Annuler</a>#}
+                
+            </div>
+        </div>
+    </div>
+
         <div class="container mb-5">
         <br>
         <br>
