@@ -16,6 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FilterFormType extends AbstractType
 {
+    /*
+     * Formulaire qui permet de sélectionner des critères de recherche
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
@@ -23,20 +26,28 @@ class FilterFormType extends AbstractType
             ->add('campus', EntityType::class, ['class' => Campus::class, 'label' => 'Campus', 'choice_label' => 'name',
                 'placeholder' => 'Tous les campus',
                 'required' => false])
-            ->add('outingNameLike', TextType::class, ['label' => 'Rechercher dans le nom', 'required' => false])
-            ->add('startingDate', DateType::class, ['widget' => 'single_text', 'label' => 'Entre', 'required' => false, 'data' => new \DateTime("now")])
-            ->add('endingDate', DateType::class, ['widget' => 'single_text', 'label' => 'Et', 'required' => false])
-            ->add('isOrganizer', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur·rice', 'required' => false])
-            ->add('isRegister', CheckboxType::class, ['label' => 'Sorties où je suis inscrit·e', 'required' => false])
-            ->add('isNotRegister', CheckboxType::class, ['label' => 'Sorties où je ne suis pas inscrit·e', 'required' => false])
-            ->add('pastOutings', CheckboxType::class, ['label' => 'Sorties passées', 'required' => false])
+            ->add('outingNameLike', TextType::class,
+                ['label' => 'Rechercher dans le nom', 'required' => false])
+            ->add('startingDate', DateType::class,
+                ['widget' => 'single_text', 'label' => 'Entre', 'required' => false, 'data' => new \DateTime("now")])
+            ->add('endingDate', DateType::class,
+                ['widget' => 'single_text', 'label' => 'Et', 'required' => false])
+            ->add('isOrganizer', CheckboxType::class,
+                ['label' => 'Sorties dont je suis l\'organisateur·rice', 'required' => false])
+            ->add('isRegister', CheckboxType::class,
+                ['label' => 'Sorties où je suis inscrit·e', 'required' => false])
+            ->add('isNotRegister', CheckboxType::class,
+                ['label' => 'Sorties où je ne suis pas inscrit·e', 'required' => false])
+            ->add('pastOutings', CheckboxType::class,
+                ['label' => 'Sorties passées', 'required' => false])
             ->add('rechercher', SubmitType::class);
     }
 
+    /*
+     * Le formulaire est lié à la classe FilterHome
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => FilterHome::class,
-        ]);
+        $resolver->setDefaults(['data_class' => FilterHome::class,]);
     }
 }

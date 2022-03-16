@@ -25,128 +25,60 @@ use Symfony\Component\Form\FormEvents;
 
 class CreateOutingType extends AbstractType
 {
+    private $em;
 
-        private $em;
+    /**
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
-        /**
-         * @param EntityManagerInterface $em
-         */
-        public function __construct(EntityManagerInterface $em)
-        {
-            $this->em = $em;
-        }
-
-
+    /*
+     * Formulaire qui permet la création d'une sortie
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class,[
-                'label'=> 'Nom de la sortie'
-            ])
+                'label'=> 'Nom de la sortie'])
             ->add('dateTimeStartOuting', DateTimeType::class,[
                 'label' => 'Date et heure de la sortie',
                 'widget' => 'single_text'])
             ->add('duration', IntegerType::class,[
-                'label'=> 'Durée de la sortie'
-            ])
+                'label'=> 'Durée de la sortie'])
             ->add('registrationDeadLine',DateType::class,[
                 'label' => 'Date de fin d\'inscription',
-                'widget' => 'single_text'
-                ])
-            ->add('maxRegistrations', null, ['label'=> 'Nombre de places']
-            )
+                'widget' => 'single_text'])
+            ->add('maxRegistrations', null, ['label'=> 'Nombre de places'])
             ->add('description', TextareaType::class)
             ->add('campus', null, ['label'=> 'Campus', 'choice_label' => 'name'])
             ->add('location', EntityType::class,[
                 'class'=>Location::class,
                 'choice_label'=>'name',
-                'label' => 'Lieu',
-              ])
+                'label' => 'Lieu',])
             ->add('city', EntityType::class, array(
                 'label' => 'Ville',
                 'required' => true,
                 'class'=>City::class,
-                //'data' => $city,
                 'choice_label'=>'name',
                 'mapped'=> false,
-                'placeholder' => 'Selectionnez une ville',
-            ))
-
-
+                'placeholder' => 'Selectionnez une ville',))
             ->add('enregistrer', SubmitType::class,[
                 'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn btn-secondary']
-              ])
+                'attr' => ['class' => 'btn btn-secondary']])
               ->add('saveAndAdd', SubmitType::class,[
                   'label' => 'Publier',
-                  'attr' => ['class' => 'btn btn-secondary']
-              ])
-
-
-//            ->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'))
-//            ->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'))
-        ;
+                  'attr' => ['class' => 'btn btn-secondary']]);
     }
-    protected function addElements(FormInterface $form, City $city = null)
-    {
 
-        $form->add('city', EntityType::class, array(
-            'label' => 'Ville 2',
-            'required' => true,
-            'class'=>City::class,
-            //'data' => $city,
-            'choice_label'=>'name',
-            'mapped'=> false,
-            'placeholder' => 'Selectionnez une ville',
-        ));
-
-        $locations = array();
-
-        if ($city) {
-
-            $locationRepository = $this->em->getRepository('App:Location');
-            $locations = $locationRepository->createQueryBuilder("q")
-                ->where("q.city = :cityId")
-                ->setParameter("cityId", $city->getId())
-                ->getQuery()
-                ->getResult();
-        }
-
-        $form->add('location', EntityType::class, array(
-            'label' => 'Adresse 2',
-            'required' => true,
-            'placeholder' => 'Sélectionnez une adresse',
-            'class' => Location::class,
-//            'choice_label'=>$locations->getName()
-            'choices' => $locations
-        ));
-    }
-        function onPreSubmit(FormEvent $event)
-        {
-            $form = $event->getForm();
-            $data = $event->getData();
-
-            $cityRepository = $this->em->getRepository('App:City');
-            $city = $cityRepository->find($data['city']);
-
-            $this->addElements($form, $city);
-        }
-
-        function onPreSetData(FormEvent $event) {
-            $outing = $event->getData();
-            $form = $event->getForm();
-
-            $city = $outing->getLocation() ? $outing->getLocation() : null;
-
-            $this->addElements($form, $city);
-
-        }
-
+    /*
+     * Le formulaire est lié à la classe Outing
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => Outing::class,
-        ]);
+        $resolver->setDefaults(['data_class' => Outing::class,]);
     }
 
     public function getBlockPrefix()

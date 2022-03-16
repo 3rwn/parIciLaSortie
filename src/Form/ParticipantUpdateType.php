@@ -20,7 +20,6 @@ class ParticipantUpdateType extends AbstractType
     /*
      * Formulaire qui récupère les informations du User connecté
      * Possibilité de mofifier n'importe quel paramètre indépendamment des autres
-     * Vérifications des données cotés Front
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -36,8 +35,7 @@ class ParticipantUpdateType extends AbstractType
                 'options' => ['attr' => ['placeholder' => 'Entrez votre nouveau mot de passe','class' => 'password-field']],
                 'required' => false,
                 'first_options'  => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmation'],
-            ])
+                'second_options' => ['label' => 'Confirmation'],])
             ->add('campus', null, ['choice_label' => 'name'])
             ->add('profilePictureFileName', FileType::class, [
                 'label' => 'Photo de profil',
@@ -46,16 +44,8 @@ class ParticipantUpdateType extends AbstractType
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpg',
-                            'image/jpeg',
-                            'image/gif'
-                        ],
-                        'mimeTypesMessage' => 'Veuillez-charger un format valide.',
-                    ])
-                ],
-            ]);
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        'mimeTypesMessage' => 'Veuillez-charger un format valide.',])],]);
 
     }
 
@@ -64,8 +54,6 @@ class ParticipantUpdateType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => Participant::class,
-        ]);
+        $resolver->setDefaults(['data_class' => Participant::class,]);
     }
 }

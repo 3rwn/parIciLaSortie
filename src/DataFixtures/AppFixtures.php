@@ -56,9 +56,7 @@ class AppFixtures extends Fixture
     public function addParticipants()
     {
         $campusTab = $this->manager->getRepository(Campus::class)->findAll();
-
         for ($i = 0; $i < 7; $i++) {
-
             $participant = new Participant();
             $participant->setName($this->faker->name)
                 ->setFirstName($this->faker->firstName)
@@ -67,7 +65,6 @@ class AppFixtures extends Fixture
                 ->setActive(true)
                 ->setPseudo($this->faker->userName)
                 ->setCampus($campusTab[$i]);
-
             $this->manager->persist($participant);
         }
         $this->manager->flush();
@@ -80,14 +77,11 @@ class AppFixtures extends Fixture
     public function addLocations()
     {
         $cityTab = $this->manager->getRepository(City::class)->findAll();
-
         for ($i = 0; $i < 6; $i++) {
-
             $location = new Location();
             $location->setName($this->faker->streetName)
                 ->setAddress($this->faker->streetAddress)
                 ->setCity($cityTab[$i]);
-
             $this->manager->persist($location);
         }
         $this->manager->flush();
@@ -103,9 +97,7 @@ class AppFixtures extends Fixture
         $participantTab = $this->manager->getRepository(Participant::class)->findAll();
         $stateTab = $this->manager->getRepository(State::class)->findAll();
         $campusTab = $this->manager->getRepository(Campus::class)->findAll();
-
         for ($i = 0; $i < 6; $i++) {
-
             $date = date_create('2050-01-01');
             $outing = new Outing();
             $outing->setName($this->faker->company)
@@ -130,12 +122,9 @@ class AppFixtures extends Fixture
      */
     public function addCampus()
     {
-
         for ($i = 0; $i < 6; $i++) {
-
             $campus = new Campus();
             $campus->setName($this->faker->city);
-
             $this->manager->persist($campus);
         }
         $this->manager->flush();
@@ -147,13 +136,10 @@ class AppFixtures extends Fixture
      */
     public function addCity()
     {
-
         for ($i = 0; $i < 6; $i++) {
-
             $city = new City();
             $city->setName($this->faker->city);
             $city->setPostalcode((00000));
-
             $this->manager->persist($city);
         }
         $this->manager->flush();

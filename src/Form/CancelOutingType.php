@@ -12,24 +12,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CancelOutingType extends AbstractType
 {
+
+    /*
+     * Formulaire qui permet la supréssion d'une sortie
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('reason', TextareaType::class,
-            ['label' => 'Motif :', 'mapped' => false])
-
-
-          ->add('submit', SubmitType::class,[
-            'label' => 'Annuler la sortie'
-          ])
-        ;
+                ['label' => 'Motif :', 'mapped' => false])
+            ->add('submit', SubmitType::class,
+                ['label' => 'Annuler la sortie']);
     }
 
+    /*
+     * Le formulaire est lié à la classe Outing
+     */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            //'data_class' => Outing::class,
-          
-        ]);
+        $resolver->setDefaults([]);
     }
 }
