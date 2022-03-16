@@ -131,6 +131,7 @@ class OutingController extends AbstractController
                 $this->addFlash('success', 'Vous avez créer une sortie.');
                 return $this->redirectToRoute('home');
             }
+            $this->addFlash('warning', 'Vous avez créer une sortie.');
         }
         return $this->render('outing/createouting.html.twig',
             ['formulaire' => $form->createView(), 'outing' => $o]);
