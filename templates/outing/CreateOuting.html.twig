@@ -11,6 +11,11 @@
         <h1> Créer une sortie </h1>
     </div>
     <br>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     <div class="container text-white">
     <div class="row">
@@ -49,7 +54,10 @@
             <div class="row mb-3">
                 <div class="col">{{ form_row(formulaire.location) }}</div>
                 <div class="col">{{ form_row(formulaire.city) }}</div>
-                <div class="col-1 btn btn-secondary">+</div>
+                <div class="col-2"><div class="row"><div class="col"></div>
+                            <a href="{{ path('create_location') }}"><div class="col-10 mx-auto mt-4 btn btn-secondary"><i class="fa-solid fa-plus"></i></div></a></div></div>
+
+
             </div>
 
             <div class="row">

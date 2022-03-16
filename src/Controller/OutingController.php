@@ -2,11 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\City;
+use App\Entity\Location;
 use App\Entity\Outing;
 use App\Form\CancelOutingType;
 use App\Form\CreateOutingType;
 use App\Form\FilterFormType;
+use App\Form\LocationType;
 use App\Form\ModifyOutingType;
+use App\Repository\CityRepository;
 use App\Repository\LocationRepository;
 use App\Repository\OutingRepository;
 use App\Repository\StateRepository;
@@ -17,8 +21,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-
-
 
 
 class OutingController extends AbstractController
@@ -48,7 +50,7 @@ class OutingController extends AbstractController
         $form = $this->createForm(ModifyOutingType::class, $o);
         $form->setData($o);
         $form->handleRequest($req);
-        $date = $date = new \DateTime();
+        $date = new \DateTime();
         if ($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()) {
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($form->getClickedButton() && 'save_and_add' === $form->getClickedButton()->getName()) {
@@ -240,6 +242,30 @@ class OutingController extends AbstractController
         }
         return $this->render('outing/CancelOuting.html.twig', ['outing' => $outing, 'form' => $form->createView()]);
     }
+
+    /**
+     * Méthode permettant d'ajouter un lieu de sortie dans la BDD
+     * Méthode servant dans la page CreateLocation.html.twig
+     * @IsGranted("ROLE_USER")
+     * @Route("/createlocation/", name="create_location")
+     */
+    public function createLocation(Request $req, EntityManagerInterface $entityManager): Response
+    {
+        $l = new Location();
+        $form = $this->createForm(LocationType::class, $l);
+        $form->setData($l);
+        $form->handleRequest($req);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($l);
+            $entityManager->flush();
+            $this->addFlash('success', 'Vous avez ajouter un lieu de sortie.');
+            return $this->redirectToRoute('outing_create');
+        }
+
+        return $this->render('outing/CreateLocation.html.twig',
+            ['formulaire' => $form->createView()]);
+    }
+
 }
 
 
