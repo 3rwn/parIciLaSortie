@@ -29,14 +29,16 @@ security:
         # target: app_any_route
       remember_me:
         secret: '%kernel.secret%' # required
-        lifetime: 604800 # 1 week in seconds
+        lifetime: 604800
+        path: /
+        # 1 week in seconds
         # by default, the feature is enabled by checking a
         # checkbox in the login form (see below), uncomment the
         # following line to always enable it.
         # always_remember_me: true
         signature_properties: ['password', 'updatedAt']
 
-#        token_provider:
+#       token_provider:
 #          service: App\Security\RememberMe\CustomTokenProvider
 
 

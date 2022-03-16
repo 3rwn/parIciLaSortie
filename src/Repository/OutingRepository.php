@@ -55,6 +55,7 @@ class OutingRepository extends ServiceEntityRepository
 
 
     /**
+     * Méthode permettant de gérer les filtres pour afficher la liste des sorties
      * @return Outing[] Returns an array of Outing objects
      */
 
@@ -96,14 +97,14 @@ class OutingRepository extends ServiceEntityRepository
                 ->setParameter('state', 5);
         }
         return $qb->getQuery()->getResult();
-
     }
 
+    /**
+     * Méthode permettant la mise à jour des états en fonction des dates
+     */
     public function updatestatebydatetime(EntityManagerInterface $entityManager, OutingRepository $outingRepository, StateRepository $stateRepository): Void
     {
-
         $now = new \DateTime('now');
-
         $outings = $outingRepository->findAll();
         foreach ($outings as $outing){
             $outingStart = $outing->getDateTimeStartOuting();
@@ -113,11 +114,9 @@ class OutingRepository extends ServiceEntityRepository
             if($outing->getDateTimeStartOuting() < $now && $outingStart->add(new \DateInterval('PT' . $outing->getDuration() . 'M')) > $now){
                 $outing->setState($stateRepository->find(4));
             }
-
             if($outing->getDateTimeStartOuting() < $now &&  $outing->getState()->getId() == 4){
                 $outing->setState($stateRepository->find(5));
             }
-
             if($outingStart->add(new \DateInterval('P1M')) < $now){
                 $outing->setState($stateRepository->find(7));
             }
@@ -125,36 +124,4 @@ class OutingRepository extends ServiceEntityRepository
             $entityManager->flush();
         }
     }
-
-
-
-
-    // /**
-    //  * @return Outing[] Returns an array of Outing objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('o.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Outing
-    {
-        return $this->createQueryBuilder('o')
-            ->andWhere('o.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
