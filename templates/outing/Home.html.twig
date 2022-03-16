@@ -2,6 +2,7 @@
 {% block title %}
     Home
 {% endblock %}
+
 {% block body %}
     <div class="container h-25">
 
@@ -9,6 +10,12 @@
     <br>
     <div class=" container my-5 px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center text-white">
         <h1> Home </h1>
+    </div>
+    <div class="text-center text-white">
+        <h5>
+            {{ user.name }} -
+            {{ "now" |date("d/m/Y") }}
+        </h5>
     </div>
     {% for message in app.flashes('success') %}
         <div class="alert alert-success">
