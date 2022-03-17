@@ -132,15 +132,29 @@ class OutingController extends AbstractController
         $form->handleRequest($req);
         $o->setOrganizer($this->getUser());
         $o->addParticipant($this->getUser());
-        $state = $stateRepository->find(1);
-        $o->setState($state);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $date = $date = new \DateTime();
-            if ($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()) {
-                $entityManager->persist($o);
-                $entityManager->flush();
-                $this->addFlash('success', 'Vous avez créer une sortie.');
-                return $this->redirectToRoute('home');
+            if ($form->getClickedButton() && 'saveAndAdd' === $form->getClickedButton()->getName()) {
+                $state = $stateRepository->find(2);
+                $o->setState($state);
+                $date = $date = new \DateTime();
+                if ($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()) {
+                    $entityManager->persist($o);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Vous avez créer une sortie.');
+                    return $this->redirectToRoute('home');
+                }
+            }
+            if ($form->getClickedButton() && 'enregistrer' === $form->getClickedButton()->getName()) {
+                $state = $stateRepository->find(1);
+                $o->setState($state);
+                $date = $date = new \DateTime();
+                if ($form->get('dateTimeStartOuting')->getData() > $date && $form->get('registrationDeadLine')->getData() < $form->get('dateTimeStartOuting')->getData()) {
+                    $entityManager->persist($o);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'Vous avez créer une sortie.');
+                    return $this->redirectToRoute('home');
+                }
             }
             $this->addFlash('warning', 'Vous avez créer une sortie.');
         }
