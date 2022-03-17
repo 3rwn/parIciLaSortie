@@ -238,9 +238,14 @@ sup {
   top: -0.5em;
 }
 
+/*a, a:hover, a:focus, a:active {*/
+/*  text-decoration: none;*/
+/*  color: inherit;*/
+/*}*/
 a {
   color: #64a19d;
   text-decoration: underline;
+
 }
 a:hover {
   color: #50817e;
@@ -11524,7 +11529,8 @@ body {
     color: #fff;
   }
   #mainNav.navbar-shrink {
-    background-color: #fff;
+    background: linear-gradient(58deg, #e0d91a 0%, #9c7502 100%);
+    box-shadow: -1px 5px 11px 0px #988c8c;
   }
   #mainNav.navbar-shrink .navbar-brand {
     color: #000;

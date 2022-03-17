@@ -47,6 +47,9 @@ class OutingController extends AbstractController
      */
     public function updateOuting(Outing $o, StateRepository $stateRepository, Request $req, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
+        if ($user === $o->getOrganizer()){
         $form = $this->createForm(ModifyOutingType::class, $o);
         $form->setData($o);
         $form->handleRequest($req);
@@ -76,6 +79,9 @@ class OutingController extends AbstractController
         }
         return $this->render('outing/modifyouting.html.twig',
             ['formulaire' => $form->createView(), 'outing' => $o]);
+        }
+        $this->addFlash('warning', 'Vous ne pouvez pas modifier la sortie : ' . $o->getName());
+        return $this->redirectToRoute('home');
     }
 
     /**
@@ -100,16 +106,21 @@ class OutingController extends AbstractController
      */
     public function deleteOuting(Outing $o, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
+        if ($user === $o->getOrganizer()){
         $entityManager->remove($o);
         $entityManager->flush(); // SAVE execute la requete SQL
         $this->addFlash('success', 'Vous avez bien supprimer la sortie : ' . $o->getName());
         //dd($p->getId());
         // rediriger vers home
         return $this->redirectToRoute('home');
+        }
+        $this->addFlash('warning', 'Vous ne pouvez pas supprimer la sortie : ' . $o->getName());
+        return $this->redirectToRoute('home');
     }
 
     /**
-     * Méthode permettant de supprimer une sortie
+     * Méthode permettant de créer une sortie
      * @IsGranted("ROLE_USER")
      * @Route("/createouting/", name="outing_create")
      */
@@ -149,7 +160,7 @@ class OutingController extends AbstractController
         $form->handleRequest($req);
         $user = $security->getUser();
         $outings = null;
-        $actions = ['Afficher' => 'outing_detail', 'S\'inscrire' => 'outing_registration', 'Annuler' => 'outing_cancel', 'Se désister' => 'outing_withdrawn', 'Modifier' => 'outing_update'];
+      //  $actions = ['Afficher' => 'outing_detail', 'S\'inscrire' => 'outing_registration', 'Annuler' => 'outing_cancel', 'Se désister' => 'outing_withdrawn', 'Modifier' => 'outing_update'];
         if ($form->isSubmitted()) {
             $criteria = $form->getData();
             // dd($criteria->getCampus());
@@ -157,14 +168,14 @@ class OutingController extends AbstractController
             return $this->render('outing/home.html.twig', [
                 'outings' => $outings,
                 'user' => $user,
-                'actions' => $actions,
+              //  'actions' => $actions,
                 'formulaire' => $form->createView()
             ]);
         }
         return $this->render('outing/home.html.twig', [
             'outings' => $outings,
             'user' => $user,
-            'actions' => $actions,
+         //   'actions' => $actions,
             'formulaire' => $form->createView()
         ]);
     }
@@ -199,6 +210,7 @@ class OutingController extends AbstractController
      */
     public function outingWthdrawn(Outing $outing, EntityManagerInterface $entityManager): Response
     {
+        
         $participant = $this->getUser();
         $datetimeNow = new \DateTime();
         if ($outing->getDateTimeStartOuting() > $datetimeNow && $outing->getRegistrationDeadLine() > $datetimeNow && $outing->getState()->getId() == 2) {
@@ -222,7 +234,9 @@ class OutingController extends AbstractController
      */
     public function cancelOuting(Outing $outing, EntityManagerInterface $entityManager, Request $request, StateRepository $stateRepository): Response
     {
+
         $user = $this->getUser();
+        if ($user === $outing->getOrganizer()){
         $form = $this->createForm(CancelOutingType::class);
         $form->handleRequest($request);
         if ($outing->getOrganizer()->getId() == $user->getId()) {
@@ -243,6 +257,10 @@ class OutingController extends AbstractController
         }
         return $this->render('outing/CancelOuting.html.twig', ['outing' => $outing, 'form' => $form->createView()]);
     }
+        $this->addFlash('warning', 'Vous ne pouvez pas annuler la sortie : ' . $outing->getName());
+        return $this->redirectToRoute('home');
+    }
+
 
     /**
      * Méthode permettant d'ajouter un lieu de sortie dans la BDD
